@@ -1,0 +1,51 @@
+CHECK LIST UNIDAD - MIDWEST (app para celular)
+==============================================
+
+Esta carpeta es la app completa. Son 8 archivos y van todos juntos:
+  index.html               la app
+  manifest.webmanifest     nombre, ícono y colores de la app
+  sw.js                    hace que abra sin señal y avisa cuando hay versión nueva
+  icon-192.png, icon-512.png, icon-maskable-512.png, apple-touch-icon.png, favicon-32.png   íconos
+
+SUBIRLA A INTERNET (una sola vez, gratis, con GitHub Pages)
+-----------------------------------------------------------
+1. Entrá a https://github.com y creá una cuenta (o iniciá sesión).
+2. Arriba a la derecha: "+" > "New repository".
+   - Repository name: checklist-midwest
+   - Marcá "Public"
+   - Tocá "Create repository".
+3. En la página que aparece, tocá el link "uploading an existing file".
+4. Arrastrá los 8 archivos de esta carpeta (los archivos, no la carpeta) y tocá "Commit changes".
+   (Este LEEME.txt no hace falta subirlo, pero si se sube no pasa nada.)
+5. Andá a "Settings" > "Pages" (menú de la izquierda).
+   - Source: "Deploy from a branch"
+   - Branch: "main" y "/ (root)" > "Save".
+6. Esperá 1 o 2 minutos y refrescá esa página: arriba aparece la dirección de la app,
+   algo como  https://TU-USUARIO.github.io/checklist-midwest/
+
+INSTALARLA EN EL CELULAR
+------------------------
+Android: abrí la dirección en Chrome > en la app, Ajustes > "Instalar"
+         (o menú ⋮ > "Instalar app" / "Agregar a pantalla de inicio").
+iPhone:  abrí la dirección en Safari > botón Compartir > "Agregar a inicio".
+Queda el ícono de MidWest en la pantalla de inicio y abre sin señal.
+
+PASAR LOS DATOS QUE YA TENÉS
+----------------------------
+La app instalada arranca vacía (cada app guarda sus datos aparte).
+En la versión vieja: Ajustes > "Exportar respaldo".
+En la app instalada: Ajustes > "Importar respaldo" y elegí ese archivo.
+
+CUANDO HAYA UNA VERSIÓN NUEVA
+-----------------------------
+En GitHub, dentro de checklist-midwest: "Add file" > "Upload files", arrastrá los archivos
+nuevos (siempre index.html y sw.js) y "Commit changes".
+Los celulares la bajan solos y muestran "Hay una versión nueva > Actualizar".
+Los datos no se pierden al actualizar.
+
+IMPORTANTE
+----------
+- El repositorio es público: cualquiera con la dirección puede abrir la app vacía.
+  Los check list, fotos y datos NUNCA salen del celular de cada uno.
+- No borres los datos del sitio en Chrome (Configuración > Sitios), porque ahí viven los check list.
+  Exportá un respaldo seguido desde Ajustes.
