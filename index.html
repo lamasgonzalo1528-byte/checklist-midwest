@@ -877,6 +877,50 @@ html.dark .eq-falt{background:#3A1D18;color:#F0A094}
 .inst.ok b{color:#7FD39B}
 html.sol .inst{background:#fff;color:#000;border:2px solid #000;border-left:6px solid var(--naranja)} html.sol .inst b,html.sol .inst small{color:#000}
 
+/* Semáforo de insumos */
+.pto.niv{grid-column:1/-1;justify-content:space-between;cursor:default;min-height:56px;flex-wrap:wrap;row-gap:6px}
+.pto.niv .c-txt{flex:1 1 120px}
+.niv-b{display:flex;gap:4px;flex:none}
+.niv-b button{min-width:60px;min-height:44px;padding:4px 8px;border:1.5px solid var(--linea);border-radius:6px;background:var(--hoja);
+  color:var(--gris);font:inherit;font-size:14px;font-weight:700;cursor:pointer;touch-action:manipulation}
+.niv-b .nv-ok[aria-pressed="true"]{background:var(--ok);border-color:var(--ok);color:#fff}
+.niv-b .nv-poco[aria-pressed="true"]{background:#E8A33A;border-color:#E8A33A;color:#1B1200}
+.niv-b .nv-no[aria-pressed="true"]{background:var(--nok);border-color:var(--nok);color:#fff}
+.pto.niv.poco{background:#FFF4E0;border-color:#E8A33A}
+html.dark .pto.niv.poco{background:#3A2C15}
+.pto.niv.falta{background:#FDEEEC;border-color:var(--nok)}
+html.dark .pto.niv.falta{background:#3A1D18}
+html.sol .niv-b button{border-width:2px;border-color:#000;color:#000}
+.repo .repo-g{font-weight:800;font-size:14px;margin:8px 0 2px}
+.repo .repo-g.lleva{color:var(--azul-txt)} .repo .repo-g.compra{color:var(--nok)}
+.repo .lst b{font-family:var(--font);font-weight:600;font-size:13px;color:var(--gris);text-align:right}
+.repo .btn.wa{margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px}
+.exp-repo{margin-top:4px;border-style:dashed;border-color:var(--naranja);color:var(--naranja)}
+
+/* Editor del check list */
+.ed-lista{list-style:none;margin:10px 0;padding:0;display:grid;gap:8px}
+.ed-fila{background:var(--hoja);border:1px solid var(--linea);border-left:3px solid var(--azul);border-radius:8px;padding:8px}
+.ed-l1{display:flex;align-items:center;gap:8px}
+.ed-n{flex:none;width:26px;height:26px;border-radius:50%;background:var(--azul);color:#fff;font-family:var(--font-mono);font-size:13px;display:flex;align-items:center;justify-content:center}
+.ed-l1 input{flex:1;min-width:0;min-height:44px}
+.ed-l2{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:6px}
+.ed-l2{flex-wrap:nowrap}
+.ed-l2 select{flex:1 1 0;min-width:0;min-height:44px;width:auto;font-size:15px;padding-left:6px;padding-right:4px}
+.ed-chico{flex:none;width:66px;min-height:44px;font-family:var(--font-mono);padding:6px!important;text-align:center}
+.ed-b{flex:none;width:40px;height:44px;border:1.5px solid var(--linea);border-radius:6px;background:var(--hoja);color:var(--azul-txt);font-size:17px;font-weight:700;cursor:pointer}
+.ed-del{color:var(--nok)}
+.ed-add{border-style:dashed;border-color:var(--azul-txt)}
+.ed-acc{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 16px}
+.ed-acc .btn{flex:1 1 140px}
+.ed-nueva{display:grid;gap:8px;padding:12px;border:2px dashed var(--naranja);border-radius:10px;background:#FFF8EF}
+html.dark .ed-nueva{background:rgba(240,131,0,.08)}
+.ed-nueva b{font-family:var(--font-tec);color:var(--azul-txt);font-size:16px}
+.ed-nueva input{min-height:46px}
+.btn.wa.grande{min-height:60px;font-size:17px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:10px}
+.exp-hoja .btn.cargando{opacity:.55}
+.exp-hoja .btn.cargando::after{content:" · preparando…";font-weight:400;font-size:13px}
+.exp-hoja .btn:disabled{cursor:wait}
+
 /* Exportar */
 .btn.exp-btn{flex:none;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-width:62px;padding:4px 8px;
   font-size:11px;font-weight:800;color:#fff;background:rgba(255,255,255,.08);border-color:var(--consola-borde)}
@@ -976,15 +1020,16 @@ html.sol .btn.sig{color:#000;border-color:#000}
   <div class="exp-grupo">Mandar por WhatsApp</div>
   <div class="exp-fila">
     <button type="button" class="btn wa" data-x="wa-pdf"><span class="wa-i"></span>PDF</button>
-    <button type="button" class="btn wa" data-x="wa-xls"><span class="wa-i"></span>Excel</button>
+    <button type="button" class="btn wa" data-x="wa-xls"><span class="wa-i"></span><span class="xl-et">Excel</span></button>
   </div>
   <button type="button" class="btn wa ancho" data-x="wa-los2"><span class="wa-i"></span>PDF y Excel juntos</button>
+  <button type="button" class="btn ancho exp-repo" id="exp-repo">📝 Pedir reposición por WhatsApp</button>
   <div class="exp-grupo">Descargar en este dispositivo</div>
   <div class="exp-fila">
     <button type="button" class="btn" data-x="dl-pdf">📄 PDF</button>
     <button type="button" class="btn" data-x="dl-xls">📊 Excel</button>
   </div>
-  <small class="exp-nota">WhatsApp abre el menú Compartir del celular: elegí WhatsApp y el chat (o "Mensaje a mí mismo" para abrirlo después en la compu). Exportar no guarda: para cerrar el check list tocá Guardar.</small>
+  <small class="exp-nota">WhatsApp abre el menú Compartir del celular: elegí WhatsApp y el chat (o "Mensaje a mí mismo" para abrirlo después en la compu). <span class="exp-nota-g">Exportar no guarda: para cerrar el check list tocá Guardar.</span></small>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div class="toast accion" id="toast-acc" role="status" aria-live="polite"><span></span><button type="button">Deshacer</button></div>
@@ -1027,7 +1072,7 @@ const STANDOFF = [
 
 const PK = {
   herr:    {hoja:'PM1 herramientas',       puntos:['Limpieza del cuerpo','Limpieza de roscas','Limpieza interna','Prueba en camión']},
-  consum:  {hoja:'Caja de consumibles',    puntos:['Cintas','Limpia contacto','WD-40'], inv:true},
+  consum:  {hoja:'Insumos',                puntos:[{txt:'Cintas', nivel:true, min:3},{txt:'Limpia contacto', nivel:true, min:2},{txt:'WD-40', nivel:true, min:2}], inv:true},
   cajaher: {hoja:'Caja de herramientas',   puntos:CAJA_HERR, inv:true},
   flejes:  {hoja:'Flejes y centralizadores', puntos:FLEJES, inv:true},
   standoff:{hoja:'Standoff BMR60',         puntos:STANDOFF, inv:true},
@@ -1065,7 +1110,8 @@ const TIPOS = [
   ...['FTCI','CAL','IND','SGR','GR','IP'].map(cod => ({cod, cat:'herr', pk:'herr'})),
   {cod:'Bridle',                 cat:'herr',  pk:'bridle'},          // complemento del IP: hay uno solo, sin N° de serie
   ...['BMR90','BMR60','BHTV42','ABI','TTA','T2B','AWT'].map(cod => ({cod, cat:'herr', pk:'herr'})),
-  {cod:'Caja de consumibles',    cat:'cajas', pk:'consum',  unico:true},
+  {cod:'Insumos en el camión',   cat:'cajas', pk:'consum',  unico:true, lugar:'camion'},   // misma lista que la base
+  {cod:'Insumos en la base',     cat:'base',  pk:'consum',  unico:true, lugar:'base'},
   {cod:'Caja de herramientas',   cat:'cajas', pk:'cajaher', unico:true},
   {cod:'Caja de flejes y centralizadores', cat:'cajas', pk:'flejes', unico:true},
   {cod:'Standoff BMR60',         cat:'cajas', pk:'standoff', unico:true},
@@ -1100,24 +1146,41 @@ const BASE_EQUIPOS = [
   ['AWT','7667']
 ];
 const COD = TIPOS.map(t => t.cod);
+// Copia de fábrica: el editor de Ajustes guarda sus cambios aparte (S.config) y se aplican encima.
+const PK_BASE = JSON.parse(JSON.stringify(PK)), TIPOS_BASE = JSON.parse(JSON.stringify(TIPOS));
+function aplicarConfig(cfg){
+  cfg = cfg || {};
+  Object.keys(PK).forEach(k => { if (!PK_BASE[k]) delete PK[k]; });
+  Object.keys(PK_BASE).forEach(k => { PK[k] = JSON.parse(JSON.stringify(PK_BASE[k])); });
+  Object.entries(cfg.pk || {}).forEach(([k, v]) => { if (v && Array.isArray(v.puntos) && v.puntos.length) PK[k] = {...(PK[k] || {hoja:k}), ...JSON.parse(JSON.stringify(v))}; });
+  TIPOS.length = 0; TIPOS_BASE.forEach(t => TIPOS.push({...t}));
+  (cfg.tipos || []).forEach(t => { if (t && t.cod && PK[t.pk] && !TIPOS.some(x => x.cod === t.cod)) TIPOS.push({...t}); });
+  COD.length = 0; TIPOS.forEach(t => COD.push(t.cod));
+}
 const MAX_FOTOS = 4;
 const tipoInfo = cod => TIPOS.find(t => t.cod === cod) || {cod, cat:'herr', pk:'herr'};
 const puntosDe = cod => PK[tipoInfo(cod).pk].puntos;
 const pideFotoDe = cod => !!PK[tipoInfo(cod).pk].foto;
 const esInv = cod => !!PK[tipoInfo(cod).pk].inv;
 const ptsDe = e => e.puntos || puntosDe(e.tipo);
-const normP = p => typeof p === 'string' ? {txt:p, med:'', fecha:false, esp:0}
-                                         : {txt:p.txt, med:p.med || '', fecha:!!p.fecha, esp:p.esp || 0};
+const normP = p => typeof p === 'string' ? {txt:p, med:'', fecha:false, esp:0, nivel:false}
+                                         : {txt:p.txt, med:p.med || '', fecha:!!p.fecha, esp:p.esp || 0, nivel:!!p.nivel, min:p.min || 0};
+const lugarDe = cod => tipoInfo(cod).lugar || '';
+const NIVELES = {ok:'Hay', poco:'Queda poco', no:'No hay'};
 const catNombre = cod => (CATS.find(c => c.id === tipoInfo(cod).cat) || CATS[0]).nombre;
 const largo = cod => cod.length > 7 ? ' largo' : '';
 // Quién hizo cada parte: el de la sección, o si no el técnico a cargo
 const hechoPor = (p, e) => e.hecho || p.tecnico;
 const nombreEq = x => x.serie ? `${x.tipo} ${x.serie}` : x.tipo;
 // Lo que falta en los conteos: [{txt, faltan}]
-function faltantesDe(pts, vals){
+function faltantesDe(pts, vals, lugar){
   return pts.map(normP).map((P, k) => {
     const v = String((vals || [])[k] ?? '').trim();
-    return P.esp && v !== '' && +v < P.esp ? {txt:P.txt, faltan:P.esp - (+v)} : null;
+    if (P.nivel && lugar === 'base'){ if (v === '' || !isFinite(+v)) return null;
+      return +v <= P.min ? {txt:P.txt, faltan:1, stock:+v, det:`quedan ${+v} en base, se pide con ${P.min}`} : null; }
+    if (P.nivel) return v === 'poco' || v === 'no' ? {txt:P.txt, faltan:1, nivel:v, det:NIVELES[v].toLowerCase()} : null;
+    if (P.esp && v !== '' && +v < P.esp){ const n = P.esp - (+v); return {txt:P.txt, faltan:n, det:`falta${n > 1 ? 'n' : ''} ${n}`}; }
+    return null;
   }).filter(Boolean);
 }
 
@@ -1133,15 +1196,16 @@ function normalizar(r){
       d.borrador = r.borrador || null;
     }
     d.ultimo = {...(r.ultimo || {})};
+    if (r.config) d.config = r.config;
     if (r.version === 1 && Array.isArray(r.registros) && r.registros.length) d.anteriores = r.registros; // se conservan de la V2
     else if (r.anteriores) d.anteriores = r.anteriores;
   }
   d.ultimo = {tecnico:'', base:'', tipoAlta:'FTCI', ...d.ultimo};
-  const REN = {'Caja de flejes':'Caja de flejes y centralizadores'};     // nombres viejos → nuevos
+  const REN = {'Caja de flejes':'Caja de flejes y centralizadores', 'Caja de consumibles':'Insumos en el camión'};     // nombres viejos → nuevos
   d.unidades.forEach(u => { if (REN[u.tipo]) u.tipo = REN[u.tipo]; });
   d.pm1.forEach(p => (p.equipos || []).forEach(e => { if (REN[e.tipo]) e.tipo = REN[e.tipo]; }));
   TIPOS.filter(t => t.unico).forEach(t => {
-    if (!d.unidades.some(u => u.tipo === t.cod)) d.unidades.push({id:'fijo-' + t.pk, tipo:t.cod, serie:''});
+    if (!d.unidades.some(u => u.tipo === t.cod)) d.unidades.push({id:'fijo-' + t.pk + (t.lugar ? '-' + t.lugar : ''), tipo:t.cod, serie:''});
   });
   // Herramientas de la base: entran solas. Las que quitaste a mano en Equipos quedan anotadas en "quitados" y no vuelven.
   d.quitados = d.quitados || [];
@@ -1160,7 +1224,7 @@ function normalizar(r){
   return d;
 }
 function cargar(){
-  try{ const r = JSON.parse(localStorage.getItem(LS)); if (r && (r.version === 1 || r.version === 2)) return normalizar(r); }
+  try{ const r = JSON.parse(localStorage.getItem(LS)); if (r && (r.version === 1 || r.version === 2)){ aplicarConfig(r.config); return normalizar(r); } }
   catch(e){ console.warn('No se pudo leer lo guardado', e); }
   return normalizar(null);
 }
@@ -1291,7 +1355,7 @@ function estadoUnidad(u){
                            : {cls:'sin', corto:'Sin revisar', txt:'Nunca se revisó', l:null, dias:null};
   const dias = diasDesde(l.p.fecha), int = S.intervalo;
   if (!completo(l.e)) return {cls:'inc', corto:'Incompleto', txt:`Última revisión incompleta (${faltaTxt(l.e)})`, l, dias};
-  const f = faltantesDe(ptsDe(l.e), l.e.vals);
+  const f = faltantesDe(ptsDe(l.e), l.e.vals, lugarDe(l.e.tipo));
   if (f.length) return {cls:'falt', corto:'Faltantes', txt:faltTxt(f), l, dias};
   if (esHerr(u)) return {cls:'ok', corto:'PM1 OK', txt:`PM1 hecho hace ${dias} día${dias === 1 ? '' : 's'}`, l, dias};
   if (dias > int) return {cls:'venc', corto:'Vencido', txt:`Vencido hace ${dias-int} día${dias-int===1?'':'s'}`, l, dias};
@@ -1337,6 +1401,7 @@ function eqHTML(u, m){
   const {n, tot} = prog(m), cls = n === tot ? 'completo' : n ? 'parcial' : '';
   const inv = esInv(u.tipo);
   const puntos = puntosDe(u.tipo).map(normP).map((P, k) => {
+    if (P.nivel) return lugarDe(u.tipo) === 'base' ? stockHTML(P, k, m.vals[k]) : nivHTML(P, k, m.vals[k]);
     if (P.esp) return contHTML(P, k, m.vals[k]);
     if (P.fecha) return `<label class="pto med${m.vals[k] ? ' on' : ''}"><span>${esc(P.txt)}</span>
          <span class="med-in"><input type="date" data-val="${k}" value="${esc(m.vals[k])}" aria-label="${esc(P.txt)}"></span></label>`;
@@ -1344,7 +1409,7 @@ function eqHTML(u, m){
          <span class="med-in"><input data-val="${k}" inputmode="decimal" enterkeyhint="done" placeholder="Valor" value="${esc(m.vals[k])}" aria-label="${esc(P.txt)} en ${esc(P.med)}"><span>${esc(P.med)}</span></span></label>`;
     return `<label class="pto${inv ? ' fila' : ''}${m.checks[k] ? ' on' : ''}"><input type="checkbox" data-k="${k}" ${m.checks[k] ? 'checked' : ''}><span class="caja" aria-hidden="true"></span><span>${esc(P.txt)}</span></label>`;
   }).join('');
-  const falt = faltantesDe(puntosDe(u.tipo), m.vals);
+  const falt = faltantesDe(puntosDe(u.tipo), m.vals, lugarDe(u.tipo));
   const fotos = m.pideFoto ? `
     <div class="fotos${m.fotos.length ? ' on' : ''}">
       <div class="fotos-cab">Foto${m.fotos.length ? `s: ${m.fotos.length}` : ' <span class="req">obligatoria</span>'}</div>
@@ -1382,7 +1447,64 @@ function contHTML(P, k, v){
     <span class="c-in"><button type="button" class="paso" data-paso="-1" data-k="${k}" aria-label="Uno menos">−</button><input data-val="${k}" inputmode="numeric" enterkeyhint="next" placeholder="Hay" value="${esc(v)}" aria-label="Cuántos ${esc(P.txt)} hay"><button type="button" class="paso" data-paso="1" data-k="${k}" aria-label="Uno más">+</button><button type="button" class="ok" data-ok="${k}" aria-label="Están los ${P.esp}">${P.esp} ✓</button></span>
   </div>`;
 }
-const faltTxt = f => f.length ? 'Faltan: ' + f.map(q => `${q.txt} (${q.faltan})`).join(', ') : '';
+const faltTxt = f => f.length ? 'Reponer: ' + f.map(q => `${q.txt} (${q.det})`).join(', ') : '';
+// Arma la lista de reposición. Si falta en el camión y en la base hay → llevar de la base. Si no → comprar/reponer.
+function reposicion(p){
+  const lug = e => tipoInfo(e.tipo).lugar;
+  const base = p.equipos.find(e => lug(e) === 'base'), cam = p.equipos.find(e => lug(e) === 'camion');
+  const valEn = (e, txt) => { if (!e) return ''; const i = ptsDe(e).map(normP).findIndex(P => P.txt === txt); return i >= 0 ? String((e.vals || [])[i] ?? '').trim() : ''; };
+  const llevar = [], comprar = [];
+  // Insumos: la lista es la misma en el camión y en la base
+  const lista = (cam || base) ? ptsDe(cam || base).map(normP).filter(P => P.nivel) : [];
+  lista.forEach(P => {
+    const vc = valEn(cam, P.txt), vb = valEn(base, P.txt), nb = vb === '' ? null : +vb;
+    const minB = base ? ((ptsDe(base).map(normP).find(x => x.txt === P.txt) || P).min || 0) : P.min;
+    const camBajo = vc === 'poco' || vc === 'no', baseBajo = nb !== null && nb <= minB;
+    if (camBajo && nb !== null && nb > 0) llevar.push({txt:P.txt, det:`camión: ${NIVELES[vc].toLowerCase()} · en base hay ${nb}`});
+    if (baseBajo) comprar.push({txt:P.txt, det:`quedan ${nb} en base, se pide con ${minB}${camBajo ? ` · camión: ${NIVELES[vc].toLowerCase()}` : ''}`});
+    else if (camBajo && (nb === null || nb === 0)) comprar.push({txt:P.txt, det:`camión: ${NIVELES[vc].toLowerCase()}${nb === 0 ? ' · en base no hay' : ' · base sin contar'}`});
+  });
+  // El resto (flejes, caja de herramientas, etc.)
+  p.equipos.filter(e => !lug(e)).forEach(e => faltantesDe(ptsDe(e), e.vals, '').forEach(q => comprar.push({txt:q.txt, det:q.det, de:nombreEq(e)})));
+  return {llevar, comprar, total:llevar.length + comprar.length};
+}
+function reposicionHTML(p, titulo){
+  const r = reposicion(p); if (!r.total) return '';
+  const li = q => `<li><span>${esc(q.txt)}${q.de ? ` <small>${esc(q.de)}</small>` : ''}</span><b>${esc(q.det)}</b></li>`;
+  return `<div class="bloque-i falt repo"><h3>${titulo || 'Para reponer'}</h3>
+    ${r.llevar.length ? `<div class="repo-g lleva">🚚 Llevar de la base al camión</div><ul class="lst">${r.llevar.map(li).join('')}</ul>` : ''}
+    ${r.comprar.length ? `<div class="repo-g compra">🛒 Comprar o reponer</div><ul class="lst">${r.comprar.map(li).join('')}</ul>` : ''}
+    <button type="button" class="btn wa ancho" data-repo>${ICO_WA}Pedir reposición por WhatsApp</button></div>`;
+}
+function textoReposicion(p){
+  const r = reposicion(p); if (!r.total) return '';
+  const l = ['*Reposición unidad* – ' + fmtFecha(p.fecha) + (p.tecnico ? ` (${p.tecnico})` : '')];
+  if (r.llevar.length) l.push('', '🚚 *Llevar de la base al camión:*', ...r.llevar.map(q => `• ${q.txt} (${q.det})`));
+  if (r.comprar.length) l.push('', '🛒 *Comprar o reponer:*', ...r.comprar.map(q => `• ${q.txt} (${q.det})${q.de ? ' – ' + q.de : ''}`));
+  return l.join('\n');
+}
+// Manda el texto directo a WhatsApp (en el celular abre la app; en la compu, WhatsApp Web/escritorio)
+function pedirReposicion(p){
+  const t = textoReposicion(p); if (!t){ toast('No hay nada para reponer.'); return; }
+  const url = 'https://wa.me/?text=' + encodeURIComponent(t);
+  try{ navigator.clipboard && navigator.clipboard.writeText(t).catch(()=>{}); }catch(e){}
+  const T = window.__TAURI__;
+  if (T && T.shell && T.shell.open){ T.shell.open(url).catch(() => toast('Texto copiado: pegalo en WhatsApp.')); return; }
+  const w = window.open(url, '_blank'); if (!w) location.href = url;
+}
+function stockHTML(P, k, v){
+  v = String(v ?? '').trim();
+  const n = +v, bajo = v !== '' && n <= P.min;
+  return `<div class="pto cont stock${v === '' ? '' : bajo ? ' falta' : ' on'}" data-row="${k}">
+    <span class="c-txt">${esc(P.txt)}<small>${v === '' ? `Pedir con ${P.min} o menos` : bajo ? `Quedan ${n}: hay que pedir` : `Quedan ${n}, OK (pedir con ${P.min})`}</small></span>
+    <span class="c-in"><button type="button" class="paso" data-paso="-1" data-k="${k}" aria-label="Uno menos">−</button><input data-val="${k}" inputmode="numeric" enterkeyhint="next" placeholder="Hay" value="${esc(v)}" aria-label="Cuántos ${esc(P.txt)} hay en la base"><button type="button" class="paso" data-paso="1" data-k="${k}" aria-label="Uno más">+</button></span>
+  </div>`;
+}
+function nivHTML(P, k, v){
+  const cls = v === 'ok' ? ' on' : v === 'poco' ? ' poco' : v === 'no' ? ' falta' : '';
+  return `<div class="pto niv${cls}" data-row="${k}"><span class="c-txt">${esc(P.txt)}</span>
+    <span class="niv-b" role="group" aria-label="${esc(P.txt)}">${Object.entries(NIVELES).map(([nv, l]) => `<button type="button" class="nv-${nv}" data-niv="${k}" data-v="${nv}" aria-pressed="${v === nv}">${nv === 'poco' ? 'Poco' : l}</button>`).join('')}</span></div>`;
+}
 
 function renderPM1(){
   const el = $('#v-pm1');
@@ -1446,6 +1568,9 @@ function renderPM1(){
     if (t.dataset.val !== undefined) ponerValor(card, +t.dataset.val, t.value);
   };
   lista.onclick = e => {
+    const nv = e.target.closest('[data-niv]');
+    if (nv){ const card = nv.closest('.eq'), k = +nv.dataset.niv, m = marcaDe(b, card.dataset.u);
+      ponerValor(card, k, m.vals[k] === nv.dataset.v ? '' : nv.dataset.v); return; }      // tocar el mismo lo borra
     const usa = e.target.closest('[data-usa]');
     if (usa){ cambiarUsadas([usa.dataset.usa]); return; }
     if (e.target.closest('[data-usatipico]')){
@@ -1490,7 +1615,7 @@ function renderPM1(){
     S.borrador = nuevoBorrador(); guardar(); renderPM1(); toast('Check list vacío');
   };
   $('#guardar').onclick = guardarPM1;
-  $('#exportar').onclick = abrirExportar;
+  $('#exportar').onclick = () => abrirExportar();
   $('#siguiente').onclick = siguientePendiente;
   $('#solo-pend').onchange = e => { S.ultimo.soloPend = e.target.checked; guardar(); $('#lista').classList.toggle('solo', e.target.checked); };
   pintarLista();
@@ -1499,11 +1624,19 @@ function renderPM1(){
 function ponerValor(card, k, valor){
   const u = unidadById(card.dataset.u), m = marcaDe(S.borrador, card.dataset.u), P = normP(puntosDe(u.tipo)[k]);
   m.vals[k] = valor; m.checks[k] = valor.trim() !== '';
-  if (P.esp){
+  if (P.nivel && lugarDe(u.tipo) === 'base'){
+    const row = card.querySelector(`[data-row="${k}"]`), tmp = document.createElement('div');
+    tmp.innerHTML = stockHTML(P, k, valor); const nuevo = tmp.firstElementChild;
+    row.className = nuevo.className; row.querySelector('small').textContent = nuevo.querySelector('small').textContent;
+  } else if (P.nivel){
+    const row = card.querySelector(`[data-row="${k}"]`);
+    row.className = 'pto niv' + (valor === 'ok' ? ' on' : valor === 'poco' ? ' poco' : valor === 'no' ? ' falta' : '');
+    row.querySelectorAll('[data-niv]').forEach(x => x.setAttribute('aria-pressed', x.dataset.v === valor));
+  } else if (P.esp){
     const row = card.querySelector(`[data-row="${k}"]`), st = contEstado(P, valor);
     row.className = 'pto cont' + st.cls; row.querySelector('small').textContent = st.txt;
   } else card.querySelector(`input[data-val="${k}"]`).closest('.pto').classList.toggle('on', m.checks[k]);
-  const f = faltantesDe(puntosDe(u.tipo), m.vals), fl = card.querySelector('.eq-falt');
+  const f = faltantesDe(puntosDe(u.tipo), m.vals, lugarDe(u.tipo)), fl = card.querySelector('.eq-falt');
   fl.textContent = faltTxt(f); fl.hidden = !f.length;
   actualizarCard(card, m); actualizarResumen(); guardar();
 }
@@ -1558,12 +1691,14 @@ function marcarTodoOK(ids){
   ids.forEach(id => {
     const u = unidadById(id), m = marcaDe(b, id);
     puntosDe(u.tipo).map(normP).forEach((P, k) => {
-      if (P.esp){ m.vals[k] = String(P.esp); m.checks[k] = true; }
+      if (P.nivel && lugarDe(u.tipo) === 'base') return;
+      if (P.nivel){ m.vals[k] = 'ok'; m.checks[k] = true; }
+      else if (P.esp){ m.vals[k] = String(P.esp); m.checks[k] = true; }
       else if (!P.med && !P.fecha) m.checks[k] = true;
     });
     if (!completo(m)){
       const f = [];
-      puntosDe(u.tipo).map(normP).forEach((P, k) => { if ((P.med || P.fecha) && !m.checks[k]) f.push(P.txt.toLowerCase()); });
+      puntosDe(u.tipo).map(normP).forEach((P, k) => { if ((P.med || P.fecha || (P.nivel && lugarDe(u.tipo) === 'base')) && !m.checks[k]) f.push(P.nivel ? `cuántos ${P.txt} hay` : P.txt.toLowerCase()); });
       if (m.pideFoto && !m.fotos.length) f.push('foto');
       quedan.push(`${nombreEq(u)}: ${f.join(', ')}`);
     }
@@ -1671,23 +1806,40 @@ function armarCheck(b){
 /* ---- Exportar: menú con PDF, Excel y WhatsApp ---- */
 // Los archivos se arman al abrir el menú: así al tocar WhatsApp el menú Compartir abre al instante
 // (si tarda, el celular lo bloquea por seguridad).
-function abrirExportar(){
-  const b = S.borrador || nuevoBorrador(), p = armarCheck(b);
-  if (!p.equipos.some(e => prog(e).n)){ toast('Todavía no cargaste nada para exportar.', true); return; }
+function abrirExportar(guardado){
+  const p = guardado || armarCheck(S.borrador || nuevoBorrador());
+  if (!guardado && !p.equipos.some(e => prog(e).n)){ toast('Todavía no cargaste nada para exportar.', true); return; }
   const comp = p.equipos.filter(completo).length;
   const nombre = `CheckList_${p.fecha}${p.tecnico ? '_' + p.tecnico : ''}`;
-  const prep = {pdf:archivoPDF(p).catch(e => { console.error(e); return null; }),
-                xls:Promise.resolve().then(() => archivoExcel([p], nombre)).catch(e => { console.error(e); return null; })};
-  const hoja = $('#exp-hoja');
+  const hoja = $('#exp-hoja'), listos = {};
+  hoja.querySelector('.exp-t').textContent = guardado ? 'Mandar check list guardado' : 'Exportar check list';
   hoja.querySelector('.exp-sub').textContent = `${fmtFecha(p.fecha)}${p.tecnico ? ', ' + p.tecnico : ''} · ${comp} de ${p.equipos.length} completos${comp < p.equipos.length ? ' (lo pendiente sale como incompleto)' : ''}`;
-  hoja.querySelectorAll('[data-x]').forEach(x => x.onclick = async () => {
+  hoja.querySelector('.exp-nota-g').hidden = !!guardado;
+  const br = $('#exp-repo'), nr = reposicion(p).total;
+  br.hidden = !nr; br.onclick = () => pedirReposicion(p);
+  if (nr) br.textContent = `📝 Pedir reposición por WhatsApp (${nr})`;
+  // Mientras se arman los archivos los botones quedan en "Preparando…": así al tocar, WhatsApp abre al instante
+  const botones = [...hoja.querySelectorAll('[data-x]')];
+  botones.forEach(x => { x.disabled = true; x.classList.add('cargando'); });
+  const listo = () => botones.forEach(x => {
+    const need = x.dataset.x === 'wa-los2' ? ['pdf','xlsWa'] : [{'wa-pdf':'pdf','wa-xls':'xlsWa','dl-pdf':'pdf','dl-xls':'xls'}[x.dataset.x]];
+    if (need.every(k => listos[k] !== undefined)){ x.disabled = need.every(k => !listos[k]); x.classList.remove('cargando'); }
+  });
+  archivoPDF(p).then(a => { listos.pdf = a; listo(); }).catch(e => { console.error(e); listos.pdf = null; listo(); });
+  setTimeout(() => {
+    try{ listos.xls = archivoExcel([p], nombre); }catch(e){ console.error(e); listos.xls = null; }
+    // Para WhatsApp: el .xlsx si el celular lo deja; si no, el mismo contenido en .csv (Excel lo abre igual)
+    try{ listos.xlsWa = listos.xls && puedeCompartir(listos.xls) ? listos.xls : archivoCSV(p, nombre); }catch(e){ console.error(e); listos.xlsWa = listos.xls; }
+    const et = hoja.querySelector('[data-x="wa-xls"] .xl-et'); if (et) et.textContent = listos.xlsWa && listos.xlsWa.nombre.endsWith('.csv') ? 'Excel (.csv)' : 'Excel';
+    listo();
+  }, 30);
+  botones.forEach(x => x.onclick = async () => {
     const q = x.dataset.x;
-    const quiere = q === 'wa-los2' ? ['pdf','xls'] : [q.replace(/^(wa|dl)-/, '')];
-    const lista = (await Promise.all(quiere.map(k => prep[k]))).filter(Boolean);
+    const lista = (q === 'wa-los2' ? [listos.pdf, listos.xlsWa] : [{'wa-pdf':listos.pdf,'wa-xls':listos.xlsWa,'dl-pdf':listos.pdf,'dl-xls':listos.xls}[q]]).filter(Boolean);
     if (!lista.length){ toast('No se pudo armar el archivo.', true); return; }
-    if (q.startsWith('wa-')) compartir(lista, `Check list de la unidad del ${fmtFecha(p.fecha)}${p.tecnico ? ' (' + p.tecnico + ')' : ''}`);
-    else { for (const a of lista) await descargarBytes(a.nombre, a.bytes, a.mime); toast(q === 'dl-pdf' ? 'PDF descargado' : 'Excel descargado'); }
-    cerrarExportar();
+    if (q.startsWith('wa-')){ const ok = await compartir(lista, `Check list de la unidad del ${fmtFecha(p.fecha)}${p.tecnico ? ' (' + p.tecnico + ')' : ''}`); if (ok) cerrarExportar(); return; }
+    for (const a of lista) await descargarBytes(a.nombre, a.bytes, a.mime);
+    toast(q === 'dl-pdf' ? 'PDF descargado' : 'Excel descargado'); cerrarExportar();
   });
   $('#exp-fondo').hidden = false; hoja.hidden = false;
   requestAnimationFrame(() => { $('#exp-fondo').classList.add('ver'); hoja.classList.add('ver'); });
@@ -1727,7 +1879,7 @@ function anteriorA(p){
     .sort((a,b) => b.fecha.localeCompare(a.fecha) || b.creado.localeCompare(a.creado))[0] || null;
 }
 function compararFaltantes(p, prev){
-  const mapa = x => new Map(x.equipos.flatMap(e => faltantesDe(ptsDe(e), e.vals).map(q => [`${e.tipo}|${e.serie}|${q.txt}`, {...q, de:nombreEq(e)}])));
+  const mapa = x => new Map(x.equipos.flatMap(e => faltantesDe(ptsDe(e), e.vals, lugarDe(e.tipo)).map(q => [`${e.tipo}|${e.serie}|${q.txt}`, {...q, de:nombreEq(e)}])));
   const a = mapa(prev), b = mapa(p);
   return {repuestos:[...a].filter(([k]) => !b.has(k) && p.equipos.some(e => k.startsWith(`${e.tipo}|${e.serie}|`) && prog(e).n)).map(([,v]) => v),
           siguen:[...b].filter(([k]) => a.has(k)).map(([,v]) => v),
@@ -1747,41 +1899,20 @@ function renderListo(el){
   if (!p){ recienGuardado = null; return false; }
   el.innerHTML = `
     <h2>Check list guardado</h2>
-    <div class="enviar">
-      <div class="enviar-t">Mandar por WhatsApp</div>
-      <div class="exp">
-        <button class="btn wa" data-env="pdf">${ICO_WA}PDF</button>
-        <button class="btn wa" data-env="xls">${ICO_WA}Excel</button>
-      </div>
-      <button class="btn wa ancho" data-env="los2">${ICO_WA}PDF y Excel juntos</button>
-      <small>Se abre el menú Compartir del celular: elegí WhatsApp (o tu propio chat, para abrirlo después en la compu).</small>
-    </div>
+    <button class="btn wa ancho grande" id="l-enviar">${ICO_WA}Mandar por WhatsApp o descargar</button>
     <div class="listo">
       <div><b>${fmtFecha(p.fecha)}</b>, ${esc(p.tecnico)}${p.base ? `, ${esc(p.base)}` : ''}</div>
       <ul>${p.equipos.map(e => `<li><span><b>${esc(e.tipo)}</b> ${esc(e.serie || '')}</span>
         <span class="${completo(e) ? 'comp' : 'inc'}">${completo(e) ? 'Completo' : faltaTxt(e)}</span></li>`).join('')}</ul>
     </div>
-    ${(() => { const fs = p.equipos.flatMap(e => faltantesDe(ptsDe(e), e.vals).map(q => ({...q, de:nombreEq(e)})));
-      return fs.length ? `<div class="listo falt"><b>Faltantes para reponer</b><ul>${fs.map(q => `<li><span>${esc(q.txt)} <small>${esc(q.de)}</small></span><span class="inc">${q.faltan}</span></li>`).join('')}</ul></div>` : ''; })()}
+    ${reposicionHTML(p)}
     ${comparacionHTML(p)}
-    <div class="exp">
-      <button class="btn" id="l-pdf">Descargar PDF</button>
-      <button class="btn" id="l-xls">Descargar Excel</button>
-    </div>
     <div class="pila">
       <button class="btn ancho" id="l-nuevo">Hacer otro check list</button>
       <button class="btn peligro ancho" id="l-borrar">Borrar este check list</button>
     </div>`;
-  // Los archivos se arman apenas se abre esta pantalla, así al tocar "Mandar" el menú abre al instante
-  const prep = {pdf:archivoPDF(p).catch(e => { console.error(e); return null; }),
-                xls:Promise.resolve().then(() => archivoExcel([p], `CheckList_${p.fecha}`)).catch(e => { console.error(e); return null; })};
-  el.querySelectorAll('[data-env]').forEach(b => b.onclick = async () => {
-    const q = b.dataset.env, lista = (await Promise.all(q === 'los2' ? [prep.pdf, prep.xls] : [prep[q]])).filter(Boolean);
-    if (!lista.length){ toast('No se pudo armar el archivo. El check list quedó guardado igual.', true); return; }
-    compartir(lista, `Check list de la unidad del ${fmtFecha(p.fecha)} (${p.tecnico})`);
-  });
-  $('#l-pdf').onclick = () => exportarPDF(p.id);
-  $('#l-xls').onclick = () => exportarExcel([p], `CheckList_${p.fecha}`);
+  $('#l-enviar').onclick = () => abrirExportar(p);
+  el.querySelectorAll('[data-repo]').forEach(x => x.onclick = () => pedirReposicion(p));
   $('#l-nuevo').onclick = () => { recienGuardado = null; renderPM1(); window.scrollTo(0,0); };
   $('#l-borrar').onclick = () => {
     if (!confirm(`¿Borrar el check list del ${fmtFecha(p.fecha)}?\nUsalo si lo cargaste mal. No se puede deshacer.`)) return;
@@ -1826,7 +1957,7 @@ function renderInicio(){
     if (!l.length) return '';
     const n = l.filter(u => completo(marcaDe(b, u.id))).length;
     return `<button class="fila-sec" data-irsec="${c.id}">${icono(c.id)}<span class="fs-t">${c.nombre}<i class="barra-p"><i style="width:${n / l.length * 100}%"></i></i></span><span class="fs-n${n === l.length ? ' ok' : ''}">${n}/${l.length}</span></button>`; }).join('');
-  const falt = us.flatMap((u, i) => faltantesDe(puntosDe(u.tipo), ms[i].vals).map(q => ({...q, de:nombreEq(u)})));
+  const falt = us.flatMap((u, i) => faltantesDe(puntosDe(u.tipo), ms[i].vals, lugarDe(u.tipo)).map(q => ({...q, de:nombreEq(u)})));
   const aten = S.unidades.map(u => ({u, e:estadoUnidad(u)})).filter(x => ['venc','inc','falt'].includes(x.e.cls))
     .sort((a,b) => RANK[a.e.cls] - RANK[b.e.cls]);
   const ants = [...S.pm1].sort((a,b) => b.fecha.localeCompare(a.fecha) || b.creado.localeCompare(a.creado));
@@ -1834,30 +1965,27 @@ function renderInicio(){
     <div class="hero">
       <div class="hero-an">${anillo(pct)}<span class="hero-pct">${Math.round(pct * 100)}%</span></div>
       <div class="hero-txt"><b>${empez ? 'Check list en curso' : 'Check list nuevo'}</b>
-        <span>${comp} de ${us.length} completos${falt.length ? `, ${falt.length} faltante${falt.length > 1 ? 's' : ''}` : ''}</span>
+        <span>${comp} de ${us.length} completos${falt.length ? `, ${falt.length} para reponer` : ''}</span>
         <div class="hero-acc"><button class="btn prim" id="i-seguir">${empez ? 'Seguir' : 'Empezar'}</button>${empez ? `<button class="btn exp-btn" id="i-exportar">${ICO_EXP}<span>Exportar</span></button>` : ''}</div></div>
     </div>
     <div class="secs-i">${secs}</div>
-    ${falt.length ? `<div class="bloque-i falt"><h3>Faltantes en este check list</h3><ul class="lst">${falt.map(q => `<li><span>${esc(q.txt)} <small>${esc(q.de)}</small></span><b>${q.faltan}</b></li>`).join('')}</ul></div>` : ''}
+    ${reposicionHTML(armarCheck(b), 'Para reponer (check list en curso)')}
     ${aten.length ? `<div class="bloque-i"><h3>Para atender</h3><ul class="lst">${aten.slice(0, 8).map(({u, e}) => `<li><button class="lnk" data-irq="${u.id}">${esc(nombreEq(u))}</button><small class="est-${e.cls}">${esc(e.corto)}</small></li>`).join('')}</ul>${aten.length > 8 ? `<small class="mas">y ${aten.length - 8} más</small>` : ''}</div>` : ''}
     ${servicesHTML()}
     <div class="bloque-i"><h3>Check list anteriores</h3>
-      ${ants.length ? `<ul class="ants">${(verTodos ? ants : ants.slice(0, 6)).map(p => { const f = p.equipos.reduce((a, e) => a + faltantesDe(ptsDe(e), e.vals).length, 0), c = p.equipos.filter(completo).length;
+      ${ants.length ? `<ul class="ants">${(verTodos ? ants : ants.slice(0, 6)).map(p => { const f = p.equipos.reduce((a, e) => a + faltantesDe(ptsDe(e), e.vals, lugarDe(e.tipo)).length, 0), c = p.equipos.filter(completo).length;
         return `<li><div class="ant-t"><b>${fmtFecha(p.fecha)}</b> ${esc(p.tecnico)}<small>${c}/${p.equipos.length} completos${f ? `, ${f} faltante${f > 1 ? 's' : ''}` : ''}</small></div>
-          <div class="ant-acc"><button class="btn wa mini" data-apdf="${p.id}">${ICO_WA}PDF</button><button class="btn wa mini" data-axls="${p.id}">${ICO_WA}Excel</button><button class="btn suave mini" data-aborr="${p.id}" aria-label="Borrar">✕</button></div></li>`; }).join('')}</ul>
+          <div class="ant-acc"><button class="btn wa mini" data-aenv="${p.id}">${ICO_WA}Mandar</button><button class="btn suave mini" data-aborr="${p.id}" aria-label="Borrar">✕</button></div></li>`; }).join('')}</ul>
         ${ants.length > 6 ? `<button class="btn suave ancho" id="i-todos">${verTodos ? 'Ver menos' : `Ver los ${ants.length}`}</button>` : ''}` : '<p class="sub">Todavía no hay check list guardados.</p>'}
     </div>
     <label class="sw sw-sol"><input type="checkbox" id="i-sol" ${S.ultimo.sol ? 'checked' : ''}><span class="sw-b" aria-hidden="true"></span>Modo sol (alto contraste, para usar afuera)</label>`;
+  el.querySelectorAll('[data-repo]').forEach(x => x.onclick = () => pedirReposicion(armarCheck(S.borrador)));
   $('#i-seguir').onclick = () => { irA('pm1'); setTimeout(siguientePendiente, 60); };
-  const ie = $('#i-exportar'); if (ie) ie.onclick = abrirExportar;
+  const ie = $('#i-exportar'); if (ie) ie.onclick = () => abrirExportar();
   el.querySelectorAll('[data-irsec]').forEach(x => x.onclick = () => irASeccion(x.dataset.irsec));
   el.querySelectorAll('[data-irq]').forEach(x => x.onclick = () => irAHerramienta(x.dataset.irq));
-  el.querySelectorAll('[data-apdf],[data-axls]').forEach(x => x.onclick = async () => {
-    const p = S.pm1.find(q => q.id === (x.dataset.apdf || x.dataset.axls)); if (!p) return;
-    try{ const a = x.dataset.apdf ? await archivoPDF(p) : archivoExcel([p], `CheckList_${p.fecha}`);
-      compartir([a], `Check list de la unidad del ${fmtFecha(p.fecha)} (${p.tecnico})`); }
-    catch(e){ console.error(e); toast('No se pudo armar el archivo.', true); }
-  });
+  el.querySelectorAll('[data-aenv]').forEach(x => x.onclick = () => { const p = S.pm1.find(q => q.id === x.dataset.aenv); if (p) abrirExportar(p); });
+
   el.querySelectorAll('[data-aborr]').forEach(x => x.onclick = () => {
     const p = S.pm1.find(q => q.id === x.dataset.aborr); if (!p) return;
     if (!confirm(`¿Borrar el check list del ${fmtFecha(p.fecha)} (${p.tecnico})?\nNo se puede deshacer.`)) return;
@@ -1880,7 +2008,8 @@ function equiposHTML(){
     <p class="sub">Las herramientas de la base, las cajas y el resto de la unidad ya vienen cargados. Acá sumás una herramienta nueva o sacás una que ya no está.</p>
     ${baseHTML()}
     <div class="alta">
-      <select id="a-tipo" aria-label="Qué es">${tiposAlta.map(t => `<option value="${esc(t.cod)}" ${t.cod === S.ultimo.tipoAlta ? 'selected' : ''}>${esc(t.cod)}</option>`).join('')}</select>
+      <select id="a-tipo" aria-label="Qué es">${tiposAlta.map(t => `<option value="${esc(t.cod)}" ${t.cod === S.ultimo.tipoAlta ? 'selected' : ''}>${esc(t.cod)}</option>`).join('')}<option value="__nuevo">➕ Otro tipo de herramienta…</option></select>
+      <input id="a-tiponuevo" placeholder="Tipo nuevo (ej.: CCL)" aria-label="Tipo nuevo" hidden autocapitalize="characters">
       <input id="a-serie" placeholder="N° de serie" aria-label="Número de serie" autocomplete="off" enterkeyhint="done">
       <button class="btn prim" id="a-add">Agregar</button>
     </div>
@@ -1891,6 +2020,7 @@ function equiposHTML(){
 function conectarEquipos(){
   const el = $('#v-ajustes');
   $('#a-add').onclick = agregarUnidad;
+  $('#a-tipo').onchange = e => { const n = e.target.value === '__nuevo'; $('#a-tiponuevo').hidden = !n; if (n) $('#a-tiponuevo').focus(); };
   const bb = $('#b-cargar'); if (bb) bb.onclick = cargarBase;
   const bq = $('#b-quitar-ej'); if (bq) bq.onclick = quitarEjemplos;
   $('#a-serie').onkeydown = e => { if (e.key === 'Enter') agregarUnidad(); };
@@ -1954,7 +2084,12 @@ function quitarEjemplos(){
 }
 
 function agregarUnidad(){
-  const tipo = $('#a-tipo').value, serie = $('#a-serie').value.trim();
+  let tipo = $('#a-tipo').value; const serie = $('#a-serie').value.trim();
+  if (tipo === '__nuevo'){
+    const nt = $('#a-tiponuevo').value.trim();
+    if (!nt){ toast('Escribí el tipo de herramienta nuevo.', true); $('#a-tiponuevo').focus(); return; }
+    tipo = tipoHerrNuevo(nt);
+  }
   if (!serie){ toast('Escribí el número de serie o un nombre.', true); $('#a-serie').focus(); return; }
   if (S.unidades.some(u => u.tipo === tipo && u.serie.toLowerCase() === serie.toLowerCase())){
     toast(`${tipo} ${serie} ya está cargado.`, true); return;
@@ -1982,6 +2117,134 @@ function irAHerramienta(id){
   if (card){ card.scrollIntoView({block:'center'}); card.classList.add('foco'); setTimeout(()=>card.classList.remove('foco'), 1300); }
 }
 
+/* ================== Editor del check list ================== */
+let edPk = null, edPuntos = null, edFoto = false;
+const TIPOS_PUNTO = {tilde:'✓ Tilde', nivel:'🚦 Insumo (camión: hay/poco/no · base: cuántos quedan)', cant:'# Cantidad', med:'📏 Medición', fecha:'📅 Fecha'};
+const puntoATipo = P => P.nivel ? 'nivel' : P.esp ? 'cant' : P.med ? 'med' : P.fecha ? 'fecha' : 'tilde';
+function editablesLista(){
+  // Una entrada por lista de puntos (todas las herramientas comparten la del PM1)
+  const vistos = new Set(), out = [];
+  TIPOS.forEach(t => { if (vistos.has(t.pk) || !PK[t.pk]) return; vistos.add(t.pk);
+    out.push({pk:t.pk, cat:t.cat, nombre: t.pk === 'herr' ? 'PM1 de las herramientas (todas)' : t.pk === 'consum' ? 'Insumos (camión y base)' : t.cod, propio: !PK_BASE[t.pk]}); });
+  return out;
+}
+function editorHTML(){
+  const ls = editablesLista();
+  if (!edPk || !PK[edPk]) edPk = ls[0] && ls[0].pk;
+  if (!edPuntos){ edPuntos = PK[edPk].puntos.map(normP).map(P => ({...P, tipo:puntoATipo(P)})); edFoto = !!PK[edPk].foto; }
+  const inv = !!PK[edPk].inv, cambiado = !!((S.config || {}).pk || {})[edPk], propio = !PK_BASE[edPk];
+  const tiposOk = inv ? ['nivel','cant','tilde'] : ['tilde','med','fecha'];
+  return `<details class="eq-adm ed-adm" id="ed-adm">
+    <summary>✏️ Editar el check list <small>puntos, insumos, cantidades y cajas nuevas</small></summary>
+    <p class="sub">Los cambios valen para los check list nuevos y para el que está en curso. Los que ya guardaste no se tocan. En los insumos, el número es el <b>punto de pedido</b>: cuando en la base queden esa cantidad o menos, sale en "Comprar".</p>
+    <label class="campo">¿Qué querés editar?<select id="ed-sel">${CATS.map(c => { const g = ls.filter(x => x.cat === c.id); return g.length ? `<optgroup label="${c.nombre}">${g.map(x => `<option value="${x.pk}" ${x.pk === edPk ? 'selected' : ''}>${esc(x.nombre)}${cambiado && x.pk === edPk ? ' (modificada)' : ''}</option>`).join('')}</optgroup>` : ''; }).join('')}</select></label>
+    <ol class="ed-lista" id="ed-lista">${edPuntos.map((P, i) => `<li class="ed-fila" data-i="${i}">
+      <div class="ed-l1"><span class="ed-n">${i + 1}</span><input class="ed-txt" data-f="txt" value="${esc(P.txt)}" placeholder="Qué se revisa" aria-label="Punto ${i + 1}"></div>
+      <div class="ed-l2">
+        <select data-f="tipo" aria-label="Tipo">${tiposOk.map(t => `<option value="${t}" ${P.tipo === t ? 'selected' : ''}>${TIPOS_PUNTO[t]}</option>`).join('')}</select>
+        ${P.tipo === 'cant' ? `<input data-f="esp" inputmode="numeric" class="ed-chico" value="${esc(P.esp || '')}" placeholder="Cant." aria-label="Cantidad que debe haber">` : ''}
+        ${P.tipo === 'nivel' ? `<input data-f="min" inputmode="numeric" class="ed-chico" value="${esc(P.min || '')}" placeholder="Mín." aria-label="Pedir cuando en la base queden esta cantidad o menos" title="Pedir cuando en la base queden esta cantidad o menos">` : ''}
+        ${P.tipo === 'med' ? `<input data-f="med" class="ed-chico" value="${esc(P.med || '')}" placeholder="Unidad" aria-label="Unidad">` : ''}
+        <button type="button" class="ed-b" data-mov="-1" aria-label="Subir">↑</button><button type="button" class="ed-b" data-mov="1" aria-label="Bajar">↓</button><button type="button" class="ed-b ed-del" data-del="${i}" aria-label="Borrar">✕</button>
+      </div></li>`).join('')}</ol>
+    <button type="button" class="btn ancho ed-add" id="ed-add">+ Agregar ${inv ? 'ítem o insumo' : 'punto'}</button>
+    <label class="sw"><input type="checkbox" id="ed-foto" ${edFoto ? 'checked' : ''}><span class="sw-b" aria-hidden="true"></span>Pide foto</label>
+    <div class="ed-acc">
+      <button type="button" class="btn prim" id="ed-guardar">Guardar cambios</button>
+      ${cambiado && !propio ? '<button type="button" class="btn suave" id="ed-orig">Volver a la lista original</button>' : ''}
+      ${propio ? '<button type="button" class="btn peligro" id="ed-borrar">Borrar esta caja</button>' : ''}
+    </div>
+    <div class="ed-nueva">
+      <b>Caja o sección nueva</b>
+      <input id="ed-nom" placeholder="Nombre (ej.: Caja de repuestos BMR)" aria-label="Nombre">
+      <div class="ed-l2">
+        <select id="ed-cat" aria-label="Dónde va">${CATS.filter(c => c.id !== 'herr').map(c => `<option value="${c.id}">${c.nombre}</option>`).join('')}</select>
+        <select id="ed-tipo" aria-label="Cómo se revisa"><option value="inv">Con cantidades (inventario)</option><option value="tilde">Con tildes</option></select>
+      </div>
+      <button type="button" class="btn ancho" id="ed-crear">+ Crear</button>
+    </div>
+  </details>`;
+}
+function puntoGuardable(P){
+  const t = P.txt.trim();
+  if (P.tipo === 'nivel') return {txt:t, nivel:true, min:Math.max(0, parseInt(P.min, 10) || 0)};
+  if (P.tipo === 'cant') return {txt:t, esp:Math.max(1, parseInt(P.esp, 10) || 1)};
+  if (P.tipo === 'med') return P.med.trim() ? {txt:t, med:P.med.trim()} : t;
+  if (P.tipo === 'fecha') return {txt:t, fecha:true};
+  return t;
+}
+// Al cambiar una lista, lo ya tildado en el check list en curso se reacomoda por nombre del punto
+function reacomodarBorrador(pk, viejos, nuevos){
+  const b = S.borrador; if (!b) return;
+  const vt = viejos.map(normP).map(P => P.txt), nt = nuevos.map(normP).map(P => P.txt);
+  S.unidades.filter(u => tipoInfo(u.tipo).pk === pk).forEach(u => {
+    const m = b.marcas[u.id]; if (!m) return;
+    const ch = [], va = [];
+    nt.forEach(t => { const i = vt.indexOf(t); ch.push(i >= 0 ? !!m.checks[i] : false); va.push(i >= 0 ? (m.vals || [])[i] || '' : ''); });
+    m.checks = ch; m.vals = va;
+  });
+}
+function guardarConfig(){ guardar(); render(); }
+function conectarEditor(){
+  const el = $('#ed-adm'); if (!el) return;
+  el.open = !!S.ultimo.edAbierto; el.ontoggle = () => { S.ultimo.edAbierto = el.open; };
+  const redibujar = () => { const y = scrollY; renderAjustes(); scrollTo(0, y); };
+  $('#ed-sel').onchange = e => { edPk = e.target.value; edPuntos = null; redibujar(); };
+  const lista = $('#ed-lista');
+  lista.oninput = e => { const f = e.target.dataset.f, li = e.target.closest('.ed-fila'); if (!f || !li || f === 'tipo') return; edPuntos[+li.dataset.i][f] = e.target.value; };
+  lista.onchange = e => { if (e.target.dataset.f !== 'tipo') return; edPuntos[+e.target.closest('.ed-fila').dataset.i].tipo = e.target.value; redibujar(); };
+  lista.onclick = e => {
+    const mv = e.target.closest('[data-mov]'), del = e.target.closest('[data-del]');
+    if (mv){ const i = +mv.closest('.ed-fila').dataset.i, j = i + (+mv.dataset.mov); if (j < 0 || j >= edPuntos.length) return; [edPuntos[i], edPuntos[j]] = [edPuntos[j], edPuntos[i]]; redibujar(); }
+    if (del){ if (edPuntos.length <= 1){ toast('Tiene que quedar al menos un punto.', true); return; } edPuntos.splice(+del.dataset.del, 1); redibujar(); }
+  };
+  $('#ed-add').onclick = () => { const def = !PK[edPk].inv ? 'tilde' : (edPuntos.some(P => P.tipo === 'nivel') ? 'nivel' : 'cant');
+    edPuntos.push({txt:'', tipo:def, esp:1, min:2, med:'', fecha:false}); redibujar();
+    const ins = document.querySelectorAll('.ed-txt'); ins[ins.length - 1].focus(); };
+  $('#ed-foto').onchange = e => { edFoto = e.target.checked; };
+  $('#ed-guardar').onclick = () => {
+    const nuevos = edPuntos.filter(P => P.txt.trim()).map(puntoGuardable);
+    if (!nuevos.length){ toast('Escribí al menos un punto.', true); return; }
+    const txts = nuevos.map(x => normP(x).txt.toLowerCase());
+    if (new Set(txts).size !== txts.length){ toast('Hay dos puntos con el mismo nombre. Cambiale el nombre a uno.', true); return; }
+    S.config = S.config || {}; S.config.pk = S.config.pk || {};
+    const viejos = PK[edPk].puntos;
+    S.config.pk[edPk] = {hoja:PK[edPk].hoja, puntos:nuevos, foto:edFoto, inv:!!PK[edPk].inv};
+    aplicarConfig(S.config); reacomodarBorrador(edPk, viejos, nuevos);
+    edPuntos = null; guardarConfig(); toast('Lista guardada');
+  };
+  const bo = $('#ed-orig'); if (bo) bo.onclick = () => {
+    if (!confirm('¿Volver esta lista a como venía de fábrica? Se pierden los cambios que le hiciste.')) return;
+    const viejos = PK[edPk].puntos; delete S.config.pk[edPk]; aplicarConfig(S.config); reacomodarBorrador(edPk, viejos, PK[edPk].puntos);
+    edPuntos = null; guardarConfig(); toast('Lista original restaurada');
+  };
+  const bb = $('#ed-borrar'); if (bb) bb.onclick = () => {
+    const t = TIPOS.find(x => x.pk === edPk);
+    if (!confirm(`¿Borrar "${t ? t.cod : edPk}"? Deja de aparecer en el check list. Los ya guardados no se tocan.`)) return;
+    S.config.tipos = (S.config.tipos || []).filter(x => x.pk !== edPk); delete S.config.pk[edPk];
+    S.unidades.filter(u => tipoInfo(u.tipo).pk === edPk).forEach(u => { if (S.borrador) delete S.borrador.marcas[u.id]; });
+    S.unidades = S.unidades.filter(u => !(t && u.tipo === t.cod));
+    aplicarConfig(S.config); edPk = null; edPuntos = null; guardarConfig(); toast('Borrada');
+  };
+  $('#ed-crear').onclick = () => {
+    const nom = $('#ed-nom').value.trim(); if (!nom){ toast('Poné el nombre de la caja o sección.', true); $('#ed-nom').focus(); return; }
+    if (TIPOS.some(t => t.cod.toLowerCase() === nom.toLowerCase())){ toast('Ya hay algo con ese nombre.', true); return; }
+    const inv = $('#ed-tipo').value === 'inv', pk = 'c_' + uid();
+    S.config = S.config || {}; S.config.pk = S.config.pk || {}; S.config.tipos = S.config.tipos || [];
+    S.config.pk[pk] = {hoja:nom.slice(0, 31), puntos:[inv ? {txt:'Primer ítem', esp:1} : 'Limpieza'], foto:false, inv};
+    S.config.tipos.push({cod:nom, cat:$('#ed-cat').value, pk, unico:true});
+    aplicarConfig(S.config);
+    S.unidades.push({id:'fijo-' + pk, tipo:nom, serie:''});
+    edPk = pk; edPuntos = null; guardarConfig(); toast('Creada: ahora cargale los ítems');
+  };
+}
+// Herramienta de un tipo que no está en la lista (ej.: CCL)
+function tipoHerrNuevo(cod){
+  cod = cod.trim(); if (!cod || COD.includes(cod)) return cod;
+  S.config = S.config || {}; S.config.tipos = S.config.tipos || [];
+  S.config.tipos.push({cod, cat:'herr', pk:'herr'}); aplicarConfig(S.config); return cod;
+}
+
 /* ================== Ajustes ================== */
 function renderAjustes(){
   $('#v-ajustes').innerHTML = `
@@ -1995,6 +2258,8 @@ function renderAjustes(){
     <hr class="sep">
     ${equiposHTML()}
     <hr class="sep">
+    ${editorHTML()}
+    <hr class="sep">
     <h2>Exportar</h2>
     <p class="sub">Un Excel con todos los check list guardados: resumen, una hoja por sección y los faltantes. Sirve para tablas dinámicas.</p>
     <button class="btn prim ancho" id="x-todo">Excel con todos los check list</button>
@@ -2007,6 +2272,7 @@ function renderAjustes(){
       <input type="file" id="imp" accept=".json,application/json" hidden>
     </div>`;
   conectarEquipos();
+  conectarEditor();
   const bi = $('#b-instalar');
   if (bi) bi.onclick = async () => { const e = pedidoInstalar; if (!e) return; e.prompt(); try{ await e.userChoice; }catch(_){} pedidoInstalar = null; renderAjustes(); };
   $('#a-sol').onchange = e => { S.ultimo.sol = e.target.checked; guardar(); document.documentElement.classList.toggle('sol', e.target.checked); };
@@ -2035,7 +2301,7 @@ function renderAjustes(){
       Object.keys(fotoCache).forEach(k => delete fotoCache[k]);
       for (const ft of (Array.isArray(d.fotos) ? d.fotos : [])) if (ft && ft.id && ft.data) await FotoDB.put(ft);
       delete d.fotos;
-      S = normalizar(d); guardar(); render(); toast('Respaldo importado');
+      aplicarConfig(d.config); S = normalizar(d); guardar(); render(); toast('Respaldo importado');
     }catch(err){ toast('Ese archivo no es un respaldo válido.', true); }
     finally{ e.target.value = ''; }
   };
@@ -2079,13 +2345,16 @@ function construirXLSX(pm1s){
   const siNo = b => [b ? 'Sí' : 'No', b ? 3 : 4];
   const numero = v => { const t = String(v ?? '').trim().replace(',', '.'); return t !== '' && isFinite(+t) ? +t : String(v ?? ''); };
   const fechaCel = v => /^\d{4}-\d{2}-\d{2}$/.test(v || '') ? [serialExcel(v), 2] : [v || '', 5];
-  const faltTotal = e => faltantesDe(ptsDe(e), e.vals).reduce((a, q) => a + q.faltan, 0);
+  const faltTotal = e => faltantesDe(ptsDe(e), e.vals, lugarDe(e.tipo)).reduce((a, q) => a + q.faltan, 0);
   const unico = pm1s.length === 1;          // un solo check list: formato informe, sin repetir datos en cada fila
   const hojas = [];
 
   // Columnas de cada renglón según el tipo de sección
   const celdasInv = (e, P, i) => {
     const v = String((e.vals || [])[i] ?? '').trim();
+    const nom = tipoInfo(e.tipo).lugar ? `${P.txt} (${e.tipo.replace(/^Insumos /, '')})` : P.txt;   // insumos: aclara si es del camión o de la base
+    if (P.nivel && lugarDe(e.tipo) === 'base') return [[nom,0], [`mín. ${P.min}`,5], v === '' ? ['',5] : [numero(v),5], ['',5], v === '' ? ['Sin contar',5] : (+v <= P.min ? ['Pedir',4] : ['OK',3])];
+    if (P.nivel) return [[nom,0], ['',5], [NIVELES[v] || '',5], ['',5], v === 'ok' ? ['OK',3] : v ? ['Reponer',4] : ['Sin revisar',4]];
     return P.esp
       ? [[P.txt,0], [P.esp,5], v === '' ? ['',5] : [numero(v),5], v === '' ? ['',5] : [Math.max(0, P.esp - (+v)),5],
          v === '' ? ['Sin contar',5] : (+v < P.esp ? ['Falta',4] : ['OK',3])]
@@ -2299,14 +2568,15 @@ function construirPDF(p, fotos){
   y += 12;
 
   // Faltantes arriba de todo: es lo primero que hay que resolver
-  const fs = p.equipos.flatMap(e => faltantesDe(ptsDe(e), e.vals).map(q => ({...q, de:nombreEq(e)})));
-  if (fs.length){
-    const ls = fs.map(q => pdfTxt(`${q.txt} (${q.de}): falta${q.faltan > 1 ? 'n' : ''} ${q.faltan}`));
+  const rp = reposicion(p);
+  if (rp.total){
+    const ls = [...rp.llevar.map(q => pdfTxt(`Llevar de la base: ${q.txt} (${q.det})`)),
+                ...rp.comprar.map(q => pdfTxt(`${q.txt} (${q.det})${q.de ? ' - ' + q.de : ''}`))];
     const cols2 = ls.length > 4 ? 2 : 1, porCol = Math.ceil(ls.length / cols2), h = porCol * 4.6 + 10;
     espacio(h + 4, false);
     y += 2;
     doc.setFillColor(253, 236, 234); doc.setDrawColor(...ROJO); doc.setLineWidth(0.4); doc.rect(M, y, W, h, 'FD');
-    fuente(10, true); color(ROJO); doc.text('Faltantes para reponer', M + 3, y + 5.5);
+    fuente(10, true); color(ROJO); doc.text('Para reponer', M + 3, y + 5.5);
     fuente(9, false); color(NEGRO);
     ls.forEach((t, i) => {
       const c = Math.floor(i / porCol), r = i % porCol;
@@ -2335,7 +2605,18 @@ function construirPDF(p, fotos){
           let x = M;
           color(GRIS); doc.text(String(k + 1), x + 1, base); x += cols[0].w;
           color(NEGRO); doc.text(itL, x + 1, base); x += cols[1].w;
-          if (P.esp){
+          if (P.nivel && lugarDe(e.tipo) === 'base'){
+            color(GRIS); doc.text(`mín. ${P.min}`, x + cols[2].w/2, base, {align:'center'}); x += cols[2].w;
+            fuente(9.5, true); color(NEGRO); doc.text(v || '-', x + cols[3].w/2, base, {align:'center'}); x += cols[3].w;
+            if (v === ''){ fuente(9, false); color(GRIS); doc.text('Sin contar', x + 1, base); }
+            else if (+v <= P.min){ fuente(9, true); color(ROJO); doc.text('Pedir', x + 1, base); }
+            else { fuente(9, true); color(VERDE); doc.text('OK', x + 1, base); }
+          } else if (P.nivel){
+            color(GRIS); doc.text('-', x + cols[2].w/2, base, {align:'center'}); x += cols[2].w;
+            const etq = {ok:['Hay', VERDE], poco:['Queda poco', [176,100,0]], no:['No hay', ROJO]}[v];
+            fuente(9, true); color(etq ? etq[1] : GRIS); doc.text(etq ? etq[0] : '-', x + cols[3].w/2, base, {align:'center'}); x += cols[3].w;
+            doc.text(etq ? (v === 'ok' ? 'OK' : 'Reponer') : 'Sin revisar', x + 1, base);
+          } else if (P.esp){
             doc.text(String(P.esp), x + cols[2].w/2, base, {align:'center'}); x += cols[2].w;
             fuente(9.5, true); doc.text(v || '-', x + cols[3].w/2, base, {align:'center'}); x += cols[3].w;
             if (v === ''){ fuente(9, false); color(GRIS); doc.text('Sin contar', x + 1, base); }
@@ -2442,24 +2723,56 @@ async function exportarPDF(id){
   }catch(e){ console.error(e); toast('No se pudo armar el PDF. El check list quedó guardado igual.', true); }
 }
 
+/* ================== CSV (Excel liviano que sí se puede compartir) ================== */
+function archivoCSV(p, base){
+  const c = v => { const t = String(v ?? ''); return /[;"\n\r]/.test(t) ? '"' + t.replace(/"/g, '""') + '"' : t; };
+  const filas = [['Fecha','Técnico a cargo','Sección','Equipo','N° de serie','Punto','Resultado','Debe haber','Hay','Faltan','Hecho por','Nota']];
+  p.equipos.forEach(e => {
+    const pts = ptsDe(e).map(normP), vals = e.vals || [];
+    pts.forEach((P, k) => {
+      const v = String(vals[k] ?? '').trim();
+      let res = '', esp = '', hay = '', fal = '';
+      if (P.nivel && lugarDe(e.tipo) === 'base'){ esp = `mín. ${P.min}`; hay = v; res = v === '' ? 'Sin contar' : (+v <= P.min ? 'Pedir' : 'OK'); }
+      else if (P.nivel) res = NIVELES[v] || 'Sin revisar';
+      else if (P.esp){ esp = P.esp; hay = v; res = v === '' ? 'Sin contar' : (+v < P.esp ? 'Falta' : 'OK'); fal = v === '' ? '' : Math.max(0, P.esp - (+v)); }
+      else if (P.fecha) res = /^\d{4}-/.test(v) ? fmtFecha(v) : 'Sin dato';
+      else if (P.med) res = v ? `${v} ${P.med}` : 'Sin medir';
+      else res = e.checks[k] ? 'OK' : 'Sin revisar';
+      filas.push([fmtFecha(p.fecha), p.tecnico, catNombre(e.tipo), e.tipo, e.serie || '', P.txt, res, esp, hay, fal, hechoPor(p, e), k === 0 ? e.nota : '']);
+    });
+    if (e.pideFoto) filas.push([fmtFecha(p.fecha), p.tecnico, catNombre(e.tipo), e.tipo, e.serie || '', 'Foto', (e.fotos || []).length ? `${e.fotos.length} foto(s), van en el PDF` : 'Sin foto', '', '', '', hechoPor(p, e), '']);
+  });
+  if (p.obs) filas.push([fmtFecha(p.fecha), p.tecnico, 'Observaciones generales', '', '', '', p.obs, '', '', '', '', '']);
+  const texto = '\uFEFF' + filas.map(f => f.map(c).join(';')).join('\r\n');
+  return {nombre:base.replace(/[^\w\-]+/g, '_') + '.csv', bytes:new TextEncoder().encode(texto), mime:'text/csv'};
+}
+const puedeCompartir = a => { try{ return !!(navigator.canShare && navigator.share && navigator.canShare({files:[new File([a.bytes], a.nombre, {type:a.mime})]})); }catch(e){ return false; } };
+
 /* ================== Compartir (WhatsApp, mail, Drive...) ================== */
 // Usa el menú "Compartir" del celular: ahí se elige WhatsApp. Si el dispositivo no lo permite, descarga.
 async function compartir(archivos, texto){
   const files = archivos.map(a => new File([a.bytes], a.nombre, {type:a.mime}));
   if (navigator.canShare && navigator.share){
-    let enviables = files.filter(f => navigator.canShare({files:[f]}));
+    const enviables = files.filter(f => navigator.canShare({files:[f]}));
     if (enviables.length){
       try{
-        await navigator.share({files:enviables, title:'Check List Unidad', text:texto});
+        await navigator.share({files:enviables, text:texto});
         const noVan = archivos.filter(a => !enviables.some(f => f.name === a.nombre));
         for (const a of noVan) await descargarBytes(a.nombre, a.bytes, a.mime);
-        if (noVan.length) toast(`Este celular no deja compartir ${noVan.map(a => a.nombre.split('.').pop().toUpperCase()).join(' ni ')} directo: se descargó, mandalo desde Descargas.`, true);
-        return;
-      }catch(e){ if (e.name === 'AbortError') return; console.warn('share', e); }
+        if (noVan.length) toast(`El ${noVan.map(a => a.nombre.split('.').pop().toUpperCase()).join(' y el ')} no se puede mandar directo desde el navegador: quedó en Descargas.`, true);
+        return true;
+      }catch(e){
+        if (e.name === 'AbortError') return false;          // cerraste el menú sin elegir
+        console.warn('share', e);
+        if (e.name === 'NotAllowedError'){ toast('El celular no dejó abrir WhatsApp. Tocá el botón otra vez.', true); return false; }
+      }
     }
   }
   for (const a of archivos) await descargarBytes(a.nombre, a.bytes, a.mime);
-  toast(window.__TAURI__ ? 'Archivo guardado.' : 'Este dispositivo no permite compartir directo: se descargó, mandalo desde Descargas.', true);
+  toast(window.__TAURI__ ? 'Archivo guardado. Mandalo desde WhatsApp Web.'
+       : (navigator.share ? 'Este celular no deja mandar ese archivo directo: quedó en Descargas.'
+                          : 'Desde la compu no se puede abrir WhatsApp directo: quedó en Descargas. Para mandarlo directo, usá la app en el celular.'), true);
+  return false;
 }
 
 /* ================== Tema claro / oscuro (mismo guardado que el FieldPro) ================== */
@@ -2480,7 +2793,7 @@ function cambiarTema(){
   aplicarTema(oscuro); })();
 
 /* ================== App instalable (PWA) ================== */
-const APP_VERSION = '23';
+const APP_VERSION = '25';
 let pedidoInstalar = null;
 const esApp = () => (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
 const esIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent);
