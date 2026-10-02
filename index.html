@@ -1035,6 +1035,32 @@ html.grande #ed-adm{font-size:16px}
 #ed-adm .ed-fila select{min-width:0;max-width:100%}
 #ed-adm .ed-fila{min-width:0;max-width:100%}
 
+/* ===== V28: planilla de Google, mail y novedades de gerencia ===== */
+.nube-est{margin:10px 0 0;padding:10px 12px;border-radius:10px;font-size:15px;font-weight:700;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.nube-est.ok{background:var(--ok-suave);color:var(--ok)}
+.nube-est.pend{background:#FFF1DC;color:#8A4A00}
+.nube-est.env{background:var(--hoja-2);color:var(--gris)}
+.nube-est .btn{min-height:40px;padding:4px 12px;font-size:14px}
+.nube-est small{display:block;font-weight:400;color:var(--gris);width:100%}
+html.dark .nube-est.pend{background:#3A2A10;color:#F2C27B}
+.nube-box label.campo{margin-bottom:8px}
+.nube-box .fila-b{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.nube-box .fila-b .btn{flex:1 1 160px}
+.nube-res{margin-top:8px;font-size:14px;font-weight:700}
+.nube-res.ok{color:var(--ok)} .nube-res.mal{color:var(--nok)}
+.nov{border-left:6px solid var(--naranja)}
+.nov h3{display:flex;align-items:center;gap:8px}
+.nov li{display:block}
+.nov li.nueva{background:#FFF8E1;margin:0 -14px;padding:8px 14px}
+html.dark .nov li.nueva{background:#2E2410}
+.nov .nv-s{font-weight:700}
+.nov .nv-c{display:block;margin-top:2px}
+.nov .nv-c b{color:var(--ok);font-family:inherit}
+.nov a.btn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.nov .nv-q{display:block;font-size:13px;color:var(--gris);margin-top:2px}
+.nov .fila-b{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.nov .fila-b .btn{flex:1 1 140px;min-height:44px}
+
 /* ===== V27: equipo completo = tarjeta plegada (una sola línea). Se toca para abrirla. ===== */
 .eq-cab .eq-tog{display:none;flex:none;width:12px;height:12px;border:solid var(--ok);border-width:0 3px 3px 0;transform:rotate(45deg);margin:0 4px 4px 4px;transition:transform .15s}
 .eq.completo .eq-cab{cursor:pointer}
@@ -1065,7 +1091,7 @@ html.grande .eq.plegada .eq-tipo{font-size:22px}
     <button type="button" class="btn-top" id="btn-tema" onclick="cambiarTema()" title="Cambiar tema claro / oscuro">🌙</button>
   </div>
   <nav class="tabs" aria-label="Secciones">
-    <button class="tab" data-t="inicio">🏠 Inicio</button>
+    <button class="tab" data-t="inicio">🏠 Inicio<span class="badge" id="b-nov" hidden></span></button>
     <button class="tab" data-t="pm1">✅ Check list</button>
     <button class="tab" data-t="ajustes">⚙️ Ajustes</button>
   </nav>
@@ -1260,6 +1286,7 @@ function normalizar(r){
     }
     d.ultimo = {...(r.ultimo || {})};
     if (r.config) d.config = r.config;
+    if (r.nube) d.nube = r.nube;                       // V28: planilla de Google + mail
     if (r.version === 1 && Array.isArray(r.registros) && r.registros.length) d.anteriores = r.registros; // se conservan de la V2
     else if (r.anteriores) d.anteriores = r.anteriores;
   }
@@ -1487,7 +1514,7 @@ function eqHTML(u, m){
         ${m.fotos.length < MAX_FOTOS ? `<label class="foto-add"><input type="file" accept="image/*" data-fadd class="oculto"><span>+ Foto</span></label>` : ''}
       </div>
     </div>` : '';
-  return `<article class="eq ${cls}${n === tot && !abiertasEq.has(u.id) ? ' plegada' : ''}" data-u="${u.id}">
+  return `<article class="eq ${cls}${n === tot && !falt.length && !abiertasEq.has(u.id) ? ' plegada' : ''}" data-u="${u.id}">
     <div class="eq-cab">
       <span class="eq-tipo${largo(u.tipo)}">${esc(u.tipo)}</span>
       <span class="eq-serie">${esc(u.serie)}</span>
@@ -1862,7 +1889,9 @@ function actualizarCard(card, m){
   if (n !== tot){ card.classList.remove('oc'); card.classList.remove('plegada'); }
   else {
     setTimeout(() => card.classList.contains('completo') && card.classList.add('oc'), 700);   // en "solo pendientes" se va sola
-    if (!card.classList.contains('plegada')) setTimeout(() => { if (card.classList.contains('completo')) plegarEq(card, true); }, 600);  // completo: se achica
+    const u = unidadById(card.dataset.u), hayFalt = u && faltantesDe(puntosDe(u.tipo), m.vals, lugarDe(u.tipo)).length > 0;
+    if (hayFalt) card.classList.remove('plegada');                       // con algo para reponer queda abierta, a la vista
+    else if (!card.classList.contains('plegada')) setTimeout(() => { if (card.classList.contains('completo')) plegarEq(card, true); }, 600);  // completo: se achica
   }
   actualizarSec(card);
 }
@@ -2006,8 +2035,11 @@ function guardarPM1(){
   S.ultimo.nombres = [...new Set([...nuevos, ...(S.ultimo.nombres || [])])].slice(0, 20);   // para autocompletar
   S.borrador = null;
   guardar();
+  if (nubeActiva()) p.nube = {estado:'pend'};
+  guardar();
   recienGuardado = p.id; render(); window.scrollTo(0,0);
   toast('Check list guardado');
+  if (nubeActiva()) enviarCheck(p, true);
 }
 
 function anteriorA(p){
@@ -2036,6 +2068,7 @@ function renderListo(el){
   el.innerHTML = `
     <h2>Check list guardado</h2>
     <button class="btn wa ancho grande" id="l-enviar">${ICO_WA}Mandar por WhatsApp o descargar</button>
+    ${nubeEstadoHTML(p) || '<div id="nube-est"></div>'}
     <div class="listo">
       <div><b>${fmtFecha(p.fecha)}</b>, ${esc(p.tecnico)}${p.base ? `, ${esc(p.base)}` : ''}</div>
       <ul>${p.equipos.map(e => `<li><span><b>${esc(e.tipo)}</b> ${esc(e.serie || '')}</span>
@@ -2049,6 +2082,7 @@ function renderListo(el){
       <button class="btn peligro ancho" id="l-borrar">Borrar este check list</button>
     </div>`;
   $('#l-enviar').onclick = () => abrirExportar(p);
+  const br = el.querySelector('[data-reenv]'); if (br) br.onclick = () => enviarCheck(p, true);
   el.querySelectorAll('[data-repo]').forEach(x => x.onclick = () => pedirReposicion(p));
   $('#l-nuevo').onclick = () => { recienGuardado = null; renderPM1(); window.scrollTo(0,0); };
   $('#l-borrar').onclick = () => {
@@ -2099,6 +2133,7 @@ function renderInicio(){
     .sort((a,b) => RANK[a.e.cls] - RANK[b.e.cls]);
   const ants = [...S.pm1].sort((a,b) => b.fecha.localeCompare(a.fecha) || b.creado.localeCompare(a.creado));
   el.innerHTML = `
+    ${novedadesHTML()}
     <div class="hero">
       <div class="hero-an">${anillo(pct)}<span class="hero-pct">${Math.round(pct * 100)}%</span></div>
       <div class="hero-txt"><b>${empez ? 'Check list en curso' : 'Check list nuevo'}</b>
@@ -2119,6 +2154,7 @@ function renderInicio(){
     <label class="sw sw-sol"><input type="checkbox" id="i-grande" ${S.ultimo.grande !== false ? 'checked' : ''}><span class="sw-b" aria-hidden="true"></span>Letras y botones grandes</label>`;
   el.querySelectorAll('[data-repo]').forEach(x => x.onclick = () => pedirReposicion(armarCheck(S.borrador)));
   $('#i-seguir').onclick = () => { irA('pm1'); setTimeout(siguientePendiente, 60); };
+  const nv = $('#nov-vistas'); if (nv) nv.onclick = () => { S.nube.sinLeer = 0; guardar(); pintarBadgeNov(); renderInicio(); };
   const ie = $('#i-exportar'); if (ie) ie.onclick = () => abrirExportar();
   el.querySelectorAll('[data-irsec]').forEach(x => x.onclick = () => irASeccion(x.dataset.irsec));
   el.querySelectorAll('[data-irq]').forEach(x => x.onclick = () => irAHerramienta(x.dataset.irq));
@@ -2393,6 +2429,8 @@ function renderAjustes(){
     <label class="sw sw-sol"><input type="checkbox" id="a-sol" ${S.ultimo.sol ? 'checked' : ''}><span class="sw-b" aria-hidden="true"></span>Modo sol (alto contraste, para usar afuera)</label>
     <label class="sw sw-sol"><input type="checkbox" id="a-grande" ${S.ultimo.grande !== false ? 'checked' : ''}><span class="sw-b" aria-hidden="true"></span>Letras y botones grandes</label>
     <hr class="sep">
+    ${nubeHTML()}
+    <hr class="sep">
     <label class="intervalo">Revisar la unidad cada <input type="number" min="1" inputmode="numeric" id="p-int" value="${S.intervalo}"> días</label>
     <p class="sub">Con esto se avisa si las cajas, el winche, el camión, etc. llevan mucho sin revisarse. Las herramientas no vencen: el PM1 se hace cuando bajan al pozo.</p>
     <hr class="sep">
@@ -2413,6 +2451,7 @@ function renderAjustes(){
     </div>`;
   conectarEquipos();
   conectarEditor();
+  conectarNube();
   const bi = $('#b-instalar');
   if (bi) bi.onclick = async () => { const e = pedidoInstalar; if (!e) return; e.prompt(); try{ await e.userChoice; }catch(_){} pedidoInstalar = null; renderAjustes(); };
   $('#a-sol').onchange = e => { S.ultimo.sol = e.target.checked; guardar(); document.documentElement.classList.toggle('sol', e.target.checked); };
@@ -2947,7 +2986,7 @@ function cambiarTema(){
   aplicarTema(oscuro); })();
 
 /* ================== App instalable (PWA) ================== */
-const APP_VERSION = '27';
+const APP_VERSION = '28';
 let pedidoInstalar = null;
 const esApp = () => (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
 const esIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent);
@@ -2978,6 +3017,180 @@ function instalarHTML(){
   return '';
 }
 
+/* ================== V28: Planilla de Google + mail a gerencia ================== */
+// Al guardar, el check list viaja a una planilla de Google del técnico (Apps Script).
+// Desde ahí sale un mail a gerencia con el PDF y el Excel. Si no hay señal, queda pendiente y se manda solo después.
+// Lo que gerencia cambia en la planilla vuelve a la app como "Novedades".
+const nube = () => S.nube || (S.nube = {url:'', clave:'', activo:false, ultNov:0, novedades:[], sinLeer:0});
+const nubeActiva = () => { const n = S.nube; return !!(n && n.activo && n.url && n.clave); };
+const aB64 = bytes => { let t = ''; for (let i = 0; i < bytes.length; i += 0x8000) t += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000)); return btoa(t); };
+
+async function llamarNube(cuerpo, ms){
+  const n = nube();
+  if (!n.url) throw new Error('Falta la dirección de la planilla.');
+  if (!navigator.onLine) throw new Error('Sin señal');
+  const ac = new AbortController(), t = setTimeout(() => ac.abort(), ms || 120000);
+  try{
+    let r;
+    try{ r = await fetch(n.url.trim(), {method:'POST', body:JSON.stringify({clave:(n.clave || '').trim(), ...cuerpo}),
+                                        headers:{'Content-Type':'text/plain;charset=utf-8'}, signal:ac.signal}); }
+    catch(e){ throw new Error(e.name === 'AbortError' ? 'Tardó demasiado (señal débil)' : 'No se pudo conectar (¿señal o dirección mal copiada?)'); }
+    const txt = await r.text(); let j;
+    try{ j = JSON.parse(txt); }
+    catch(e){ throw new Error(/<html/i.test(txt) ? 'La dirección no es la de la aplicación web (tiene que terminar en /exec) o no tiene acceso "Cualquier persona".' : 'Respuesta rara de Google.'); }
+    if (!j.ok) throw new Error(j.error || 'Error en la planilla');
+    if (j.url) n.urlPlanilla = j.url;
+    return j;
+  } finally { clearTimeout(t); }
+}
+
+// Lo mismo que se ve en el resumen: qué hay para resolver, qué reponer y el estado general
+function analizarCheck(p){
+  const problemas = [];
+  p.equipos.forEach(e => {
+    const pts = ptsDe(e).map(normP), fal = faltantesDe(pts, e.vals, lugarDe(e.tipo));
+    const sinRev = pts.map((P, k) => !e.checks[k] && !fal.some(f => f.txt === P.txt) ? P.txt : null).filter(Boolean);
+    const d = [...fal.map(f => `${f.txt}: ${f.det}`), ...sinRev.map(t => `${t}: sin revisar`), ...(e.pideFoto && !(e.fotos || []).length ? ['Sin foto'] : [])];
+    if (d.length || e.nota) problemas.push({eq:nombreEq(e), sec:catNombre(e.tipo), d, nota:e.nota || '', quien:e.hecho || p.tecnico});
+  });
+  const rp = reposicion(p);
+  const estado = !problemas.length && !rp.total ? 'OK' : (rp.comprar.length || problemas.filter(q => q.d.length).length > 3 ? 'Para resolver' : 'Con observaciones');
+  return {problemas, rp, estado};
+}
+
+async function datosParaNube(p){
+  const {problemas, rp, estado} = analizarCheck(p);
+  const herr = p.equipos.filter(e => tipoInfo(e.tipo).cat === 'herr');
+  const pdf = await archivoPDF(p), xls = archivoExcel([p], `CheckList_${p.fecha}_${p.tecnico}`);
+  const cr = new Date(p.creado || Date.now());
+  return {id:p.id, fecha:p.fecha, hora:`${pad(cr.getHours())}:${pad(cr.getMinutes())}`, base:p.base, tecnico:p.tecnico,
+    responsable:responsableDe(p), firmado:!!p.firma, completos:`${p.equipos.filter(completo).length}/${p.equipos.length}`, estado,
+    herramientas:herr.map(nombreEq).join(', '), obs:p.obs || '',
+    resolver:problemas.map(q => [q.eq, q.sec, q.d.join('; ') || 'Nota', q.nota, q.quien]),
+    reposicion:[...rp.llevar.map(q => [q.txt, 'Camión', q.det, 'Llevar de la base']), ...rp.comprar.map(q => [q.txt, q.de || 'Base', q.det, 'Comprar'])],
+    pm1:herr.map(e => [e.tipo, e.serie || '', completo(e) ? 'Completo' : 'Incompleto', e.nota || '', e.hecho || p.tecnico]),
+    pdf:{nombre:pdf.nombre, base64:aB64(pdf.bytes)}, xlsx:{nombre:xls.nombre, base64:aB64(xls.bytes)}};
+}
+
+const enviando = new Set();
+async function enviarCheck(p, avisar){
+  if (!nubeActiva() || enviando.has(p.id)) return false;
+  enviando.add(p.id);
+  p.nube = {...(p.nube || {}), estado:'env'}; pintarNube(p);
+  try{
+    const j = await llamarNube({...(await datosParaNube(p))});
+    p.nube = {estado:'ok', en:new Date().toISOString(), pdfUrl:j.pdfUrl || '', mail:j.mail || ''};
+    if (avisar) toast('☁️ Enviado a la planilla y por mail');
+    return true;
+  }catch(e){
+    p.nube = {estado:'pend', err:e.message, intento:new Date().toISOString()};
+    if (avisar) toast('⏳ No se pudo mandar: ' + e.message + '. Queda pendiente y se manda solo.', true);
+    return false;
+  }finally{ enviando.delete(p.id); guardar(); pintarNube(p); if (tab === 'inicio') renderInicio(); }
+}
+const pendientesNube = () => S.pm1.filter(p => p.nube && p.nube.estado !== 'ok');
+let mandandoPend = false;
+async function enviarPendientes(avisar){
+  if (!nubeActiva() || mandandoPend || !navigator.onLine) return;
+  const l = pendientesNube(); if (!l.length) return;
+  mandandoPend = true; let ok = 0;
+  try{ for (const p of l) if (await enviarCheck(p)) ok++; } finally { mandandoPend = false; }
+  if (ok) toast(`☁️ ${ok} check list${ok > 1 ? 's' : ''} pendiente${ok > 1 ? 's' : ''} enviado${ok > 1 ? 's' : ''}`);
+  else if (avisar) toast('Todavía no se pudo mandar. Se reintenta solo.', true);
+}
+
+function nubeEstadoHTML(p){
+  if (!p.nube) return nubeActiva() ? '' : '';
+  const n = p.nube, h = n.en ? new Date(n.en) : null;
+  if (n.estado === 'ok') return `<div class="nube-est ok" id="nube-est">☁️ Enviado a la planilla y por mail${h ? ` (${pad(h.getHours())}:${pad(h.getMinutes())})` : ''}</div>`;
+  if (n.estado === 'env') return `<div class="nube-est env" id="nube-est">⏳ Mandando a la planilla y el mail…</div>`;
+  return `<div class="nube-est pend" id="nube-est">⏳ Pendiente de envío a gerencia<button class="btn" data-reenv="${p.id}" type="button">Reintentar</button>${n.err ? `<small>${esc(n.err)}. Se manda solo cuando haya señal.</small>` : ''}</div>`;
+}
+function pintarNube(p){
+  const x = $('#nube-est'); if (!x || recienGuardado !== p.id) return;
+  x.outerHTML = nubeEstadoHTML(p) || '<div id="nube-est"></div>';
+  const b = document.querySelector(`[data-reenv="${p.id}"]`); if (b) b.onclick = () => enviarCheck(p, true);
+}
+
+/* ---- Novedades de gerencia ---- */
+let buscandoNov = false;
+async function buscarNovedades(){
+  if (!nubeActiva() || buscandoNov || !navigator.onLine) return;
+  buscandoNov = true;
+  try{
+    const n = nube(), j = await llamarNube({accion:'novedades', desde:n.ultNov || 0}, 30000);
+    const nuevas = (j.novedades || []).filter(x => x.n > (n.ultNov || 0));
+    if (!nuevas.length) return;
+    n.ultNov = Math.max(...nuevas.map(x => x.n));
+    n.novedades = [...nuevas.reverse(), ...(n.novedades || [])].slice(0, 60);
+    n.sinLeer = (n.sinLeer || 0) + nuevas.length;
+    guardar(); pintarBadgeNov();
+    toast(`🔔 Gerencia hizo ${nuevas.length} cambio${nuevas.length > 1 ? 's' : ''} en la planilla`);
+    if (tab === 'inicio') renderInicio();
+  }catch(e){ console.warn('novedades', e.message); }
+  finally{ buscandoNov = false; }
+}
+function pintarBadgeNov(){
+  const b = $('#b-nov'), k = (S.nube && S.nube.sinLeer) || 0;
+  if (!b) return; b.hidden = !k; b.textContent = k > 9 ? '9+' : k;
+}
+function novedadesHTML(){
+  const n = S.nube; if (!n || !nubeActiva() || !(n.novedades || []).length) return '';
+  const fh = s => { const d = new Date(s); return isNaN(d) ? '' : `${pad(d.getDate())}/${pad(d.getMonth()+1)} ${pad(d.getHours())}:${pad(d.getMinutes())}`; };
+  const l = n.novedades.slice(0, 8);
+  return `<div class="bloque-i nov"><h3>🔔 Novedades de gerencia${n.sinLeer ? ` <span class="badge">${n.sinLeer}</span>` : ''}</h3>
+    <ul class="lst">${l.map((x, i) => `<li class="${i < (n.sinLeer || 0) ? 'nueva' : ''}"><span class="nv-s">${esc(x.hoja)} · ${esc(x.sobre)}</span>
+      <span class="nv-c">${esc(x.columna)}: ${x.antes ? `${esc(x.antes)} → ` : ''}<b>${esc(x.ahora || '(borrado)')}</b></span>
+      <span class="nv-q">${esc(x.quien || 'gerencia')} · ${fh(x.cuando)}</span></li>`).join('')}</ul>
+    <div class="fila-b">${n.sinLeer ? '<button class="btn" id="nov-vistas" type="button">✓ Marcar como vistas</button>' : ''}
+      ${n.urlPlanilla ? `<a class="btn" href="${esc(n.urlPlanilla)}" target="_blank" rel="noopener">Abrir la planilla</a>` : ''}</div></div>`;
+}
+
+/* ---- Ajustes: conexión ---- */
+function nubeHTML(){
+  const n = nube(), pend = pendientesNube().length;
+  return `<details class="bloque-i nube-box" id="nube-box"${n.url ? '' : ' open'}><summary><b>☁️ Planilla y mail a gerencia</b> <small id="n-est">${nubeActiva() ? 'conectada ✓' : 'sin conectar'}</small></summary>
+    <p class="sub">Al guardar, el check list se manda solo a tu planilla de Google y gerencia recibe un mail (Outlook o cualquier correo) con el PDF y el Excel. Lo que ellos cambien en la planilla te aparece en Inicio como novedad.</p>
+    <label class="campo">Dirección de la planilla (termina en /exec)<input id="n-url" value="${esc(n.url)}" placeholder="https://script.google.com/macros/s/…/exec" autocapitalize="off" autocorrect="off" spellcheck="false"></label>
+    <label class="campo">Clave (la de la hoja Config)<input id="n-clave" value="${esc(n.clave)}" placeholder="MW-XXXXXXXX" autocapitalize="characters" spellcheck="false"></label>
+    <label class="sw"><input type="checkbox" id="n-activo" ${n.activo ? 'checked' : ''}><span class="sw-b" aria-hidden="true"></span>Mandar automáticamente al guardar</label>
+    <div class="fila-b"><button class="btn prim" id="n-probar" type="button">Probar conexión</button>
+      ${pend ? `<button class="btn" id="n-pend" type="button">Mandar pendientes (${pend})</button>` : ''}
+      ${S.pm1.length ? `<button class="btn" id="n-viejos" type="button">Mandar check lists anteriores</button>` : ''}</div>
+    <div class="nube-res" id="n-res"></div></details>`;
+}
+function conectarNube(){
+  const n = nube(), res = $('#n-res');
+  const leer = () => { n.url = $('#n-url').value.trim(); n.clave = $('#n-clave').value.trim().toUpperCase(); $('#n-clave').value = n.clave; guardar();
+    $('#n-est').textContent = nubeActiva() ? 'conectada ✓' : 'sin conectar'; };
+  $('#n-url').onchange = leer; $('#n-clave').onchange = leer;
+  $('#n-activo').onchange = e => { n.activo = e.target.checked; leer();
+    toast(n.activo ? 'Envío automático prendido' : 'Envío automático apagado'); if (n.activo) enviarPendientes(); };
+  $('#n-probar').onclick = async () => {
+    leer(); res.className = 'nube-res'; res.textContent = 'Probando…';
+    try{
+      const j = await llamarNube({prueba:true}, 45000);
+      n.activo = true; $('#n-activo').checked = true; guardar(); $('#n-est').textContent = 'conectada ✓';
+      res.className = 'nube-res ok';
+      res.textContent = `✓ Conectada con "${j.planilla}". Te llegó un mail de prueba. Los check lists van a: ${(j.mails || []).join(', ') || '(cargá los mails en la hoja Config)'}`;
+      buscarNovedades();
+    }catch(e){ res.className = 'nube-res mal'; res.textContent = '✕ ' + e.message; }
+  };
+  const bp = $('#n-pend'); if (bp) bp.onclick = () => enviarPendientes(true);
+  const bv = $('#n-viejos'); if (bv) bv.onclick = () => {
+    const l = S.pm1.filter(p => !p.nube);
+    if (!l.length){ toast('Ya están todos mandados o pendientes.'); return; }
+    if (!confirm(`Se van a mandar ${l.length} check list${l.length > 1 ? 's' : ''} anterior${l.length > 1 ? 'es' : ''} a la planilla.\nGerencia recibe un mail por cada uno. ¿Seguir?`)) return;
+    l.forEach(p => p.nube = {estado:'pend'}); guardar(); enviarPendientes(true); renderAjustes();
+  };
+}
+
+// Reintentos y novedades: al abrir, al volver a la app, al recuperar señal y cada 5 minutos
+window.addEventListener('online', () => { enviarPendientes(); buscarNovedades(); });
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible'){ enviarPendientes(); buscarNovedades(); } });
+setInterval(() => { if (document.visibilityState === 'visible'){ enviarPendientes(); buscarNovedades(); } }, 5 * 60 * 1000);
+setTimeout(() => { enviarPendientes(); buscarNovedades(); }, 2500);
+
 /* ================== Arranque ================== */
 document.querySelectorAll('#exp-hoja .wa-i').forEach(x => x.outerHTML = ICO_WA);
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#exp-hoja').hidden) cerrarExportar(); });
@@ -2987,6 +3200,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#exp-h
 document.documentElement.classList.toggle('sol', !!S.ultimo.sol);
 document.documentElement.classList.toggle('grande', S.ultimo.grande !== false);   // V27: letras grandes de entrada
 irA('inicio');
+pintarBadgeNov();
 </script>
 </body>
 </html>
