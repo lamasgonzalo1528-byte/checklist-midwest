@@ -643,6 +643,18 @@ html.sol .todo-ok,html.sol .todo-sec{border-width:2px}
 .sec-t{min-width:0}
 .sec-quien{display:block;font-size:13px;font-weight:400;color:var(--gris)}
 .sec-quien:empty{display:none}
+.firma{margin:14px 0 4px;padding-bottom:12px}
+.firma-wrap{position:relative;background:#fff;border-radius:10px;height:170px;margin:8px 0 6px;border:2px dashed #9FB3C4;overflow:hidden}
+.firma-wrap.ok{border-style:solid;border-color:var(--naranja)}
+.firma-wrap canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
+.firma-wrap .firma-ph{position:absolute;left:0;right:0;bottom:34px;text-align:center;color:#8A9AA8;font-size:15px;pointer-events:none}
+.firma-wrap .firma-lin{position:absolute;left:18px;right:18px;bottom:28px;border-top:1.5px solid #B9C6D1;pointer-events:none}
+.firma-wrap.ok .firma-ph{display:none}
+.firma-acc{display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--consola-lbl);font-size:13px}
+.firma-acc .btn{min-height:40px;padding:6px 14px}
+.listo-firma{display:flex;align-items:center;gap:12px;margin-top:10px;padding-top:10px;border-top:1px solid var(--borde, #ddd)}
+.listo-firma img{height:52px;background:#fff;border-radius:6px;padding:2px 6px}
+.listo-firma small{display:block;color:var(--gris)}
 .hecho{display:flex;align-items:center;gap:10px;margin:2px 0 10px;font-size:14px;color:var(--gris)}
 .hecho input{flex:1;min-height:44px}
 .sec-n{margin-left:auto;font-size:15px;padding:2px 10px;border-radius:12px;background:var(--hoja);border:1px solid var(--linea);color:var(--gris)}
@@ -988,6 +1000,57 @@ html.sol .consola .sw,html.sol .hero-txt b{color:#000}
 html.sol .consola input[type=date]::-webkit-calendar-picker-indicator{filter:none}
 html.sol .barra .resu b,html.sol .hero-pct{color:#8A4A00}
 html.sol .btn.sig{color:#000;border-color:#000}
+html.sol .sec > summary,html.sol.dark .sec > summary{background:#003A63 !important;color:#fff !important;border-color:#000}
+html.sol .sec > summary *{color:#fff}
+html.sol .firma-wrap{border-color:#000}
+
+/* ===== V27: letras y botones grandes (para usar con guantes y al sol) ===== */
+html.grande body{font-size:18px}
+html.grande .eq{border-width:2px;border-left-width:8px}
+html.grande .eq-tipo{font-size:28px;font-weight:800}
+html.grande .eq-tipo.largo{font-size:22px}
+html.grande .eq-serie{font-size:18px;font-weight:700;color:var(--tinta)}
+html.grande .eq-cnt{font-size:18px}
+html.grande .puntos{grid-template-columns:1fr;gap:10px}
+html.grande .pto{min-height:66px;font-size:19px;font-weight:700;border-width:2px;border-radius:10px}
+html.grande .pto.tk{min-height:70px;font-size:20px;padding:10px 14px;gap:14px}
+html.grande .caja{width:40px;height:40px;border-width:3px;border-radius:8px}
+html.grande .pto.tk.on{background:var(--ok);border-color:var(--ok);color:#fff}
+html.grande .pto.tk input:checked + .caja{background:#fff;border-color:#fff}
+html.grande .pto.tk input:checked + .caja::after{left:12px;top:3px;width:11px;height:23px;border-color:var(--ok);border-width:0 5px 5px 0}
+html.grande .c-txt small{font-size:15px}
+html.grande .niv-b button{min-height:52px;font-size:16px;font-weight:700}
+html.grande .c-in button{min-height:52px}
+html.grande .pto.cont .c-in input,html.grande .pto.med .med-in input{min-height:52px;font-size:19px}
+html.grande .todo-ok{min-height:46px;font-size:16px;font-weight:800;border-width:2px;padding:4px 12px}
+html.grande .btn{min-height:56px;font-size:18px;font-weight:700}
+html.grande .tab{font-size:17px;font-weight:700;min-height:54px}
+html.grande .eq-falt{font-size:17px}
+html.grande .sec > summary{font-size:21px;min-height:60px}
+html.grande .hecho input{font-size:18px}
+html.grande .eq-nota summary{font-size:17px;min-height:44px}
+html.grande .eq-nota input{font-size:18px;min-height:52px}
+@media (max-width:380px){ html.grande .niv-b button{min-width:52px;font-size:15px} }
+html.grande #ed-adm{font-size:16px}
+#ed-adm .ed-fila select{min-width:0;max-width:100%}
+#ed-adm .ed-fila{min-width:0;max-width:100%}
+
+/* ===== V27: equipo completo = tarjeta plegada (una sola línea). Se toca para abrirla. ===== */
+.eq-cab .eq-tog{display:none;flex:none;width:12px;height:12px;border:solid var(--ok);border-width:0 3px 3px 0;transform:rotate(45deg);margin:0 4px 4px 4px;transition:transform .15s}
+.eq.completo .eq-cab{cursor:pointer}
+.eq.completo .eq-cab .eq-tog{display:block}
+.eq.plegada{padding-bottom:0;border-left-color:var(--ok)}
+.eq.plegada > :not(.eq-cab){display:none !important}
+.eq.plegada .eq-cab{margin-bottom:0;border-bottom:0;border-radius:0 0 8px 8px}
+.eq.plegada .eq-cab .eq-tog{transform:rotate(-45deg);margin:0 6px 0 2px}
+.eq.plegada .eq-tipo{font-size:20px;flex:0 1 auto;min-width:0;white-space:normal;line-height:1.15}
+html.grande .eq.plegada .eq-tipo.largo{font-size:20px}
+.eq.plegada .eq-serie{flex:0 1 auto}
+.eq.plegada .eq-cnt{flex:none;margin-left:auto !important;white-space:nowrap}
+html.grande .eq.plegada .eq-tipo{font-size:22px}
+.eq.plegada .eq-cnt::before{content:"✓ ";}
+.eq .eq-nt{display:none}
+.eq.plegada .eq-nt{display:inline;flex:none;font-size:16px}
 
 @media (max-width:380px){ .tab{font-size:11.5px} .mw-logo-txt .l2{display:none} }
 </style>
@@ -1397,6 +1460,13 @@ function marcaDe(b, id){
 }
 const tieneDatos = m => !!m && (prog(m).n > 0 || !!m.nota || (m.vals || []).some(v => v) || (m.fotos || []).length > 0);
 
+// Equipos completos que el usuario abrió a mano (los demás completos se ven plegados)
+const abiertasEq = new Set();
+function plegarEq(card, plegar){
+  if (!card) return;
+  card.classList.toggle('plegada', plegar);
+  plegar ? abiertasEq.delete(card.dataset.u) : abiertasEq.add(card.dataset.u);
+}
 function eqHTML(u, m){
   const {n, tot} = prog(m), cls = n === tot ? 'completo' : n ? 'parcial' : '';
   const inv = esInv(u.tipo);
@@ -1407,7 +1477,7 @@ function eqHTML(u, m){
          <span class="med-in"><input type="date" data-val="${k}" value="${esc(m.vals[k])}" aria-label="${esc(P.txt)}"></span></label>`;
     if (P.med) return `<label class="pto med${m.vals[k] ? ' on' : ''}"><span>${esc(P.txt)}</span>
          <span class="med-in"><input data-val="${k}" inputmode="decimal" enterkeyhint="done" placeholder="Valor" value="${esc(m.vals[k])}" aria-label="${esc(P.txt)} en ${esc(P.med)}"><span>${esc(P.med)}</span></span></label>`;
-    return `<label class="pto${inv ? ' fila' : ''}${m.checks[k] ? ' on' : ''}"><input type="checkbox" data-k="${k}" ${m.checks[k] ? 'checked' : ''}><span class="caja" aria-hidden="true"></span><span>${esc(P.txt)}</span></label>`;
+    return `<label class="pto tk${inv ? ' fila' : ''}${m.checks[k] ? ' on' : ''}"><input type="checkbox" data-k="${k}" ${m.checks[k] ? 'checked' : ''}><span class="caja" aria-hidden="true"></span><span>${esc(P.txt)}</span></label>`;
   }).join('');
   const falt = faltantesDe(puntosDe(u.tipo), m.vals, lugarDe(u.tipo));
   const fotos = m.pideFoto ? `
@@ -1417,12 +1487,12 @@ function eqHTML(u, m){
         ${m.fotos.length < MAX_FOTOS ? `<label class="foto-add"><input type="file" accept="image/*" data-fadd class="oculto"><span>+ Foto</span></label>` : ''}
       </div>
     </div>` : '';
-  return `<article class="eq ${cls}" data-u="${u.id}">
+  return `<article class="eq ${cls}${n === tot && !abiertasEq.has(u.id) ? ' plegada' : ''}" data-u="${u.id}">
     <div class="eq-cab">
       <span class="eq-tipo${largo(u.tipo)}">${esc(u.tipo)}</span>
       <span class="eq-serie">${esc(u.serie)}</span>
       <button type="button" class="todo-ok" data-todo="${u.id}" aria-label="Marcar todo OK en ${esc(nombreEq(u))}">✓ Todo OK</button>
-      <span class="eq-cnt">${n}/${tot}</span>
+      ${m.nota ? '<span class="eq-nt" title="Tiene nota">📝</span>' : ''}<span class="eq-cnt">${n}/${tot}</span><span class="eq-tog" aria-hidden="true"></span>
     </div>
     <div class="puntos${inv ? ' lista' : ''}">${puntos}</div>
     <p class="eq-falt"${falt.length ? '' : ' hidden'}>${faltTxt(falt)}</p>
@@ -1529,6 +1599,12 @@ function renderPM1(){
     <datalist id="nombres">${(S.ultimo.nombres || []).map(n => `<option value="${esc(n)}">`).join('')}</datalist>
     <div id="lista"></div>
     <label class="campo" style="margin-top:4px">Observaciones generales<textarea id="f-obs">${esc(b.obs)}</textarea></label>
+    <div class="firma consola" id="firma-box">
+      <div class="consola-t">Responsable a cargo</div>
+      <label class="campo">Nombre y apellido<input id="f-responsable" value="${esc(b.responsable || '')}" placeholder="${esc(b.tecnico || 'Nombre del responsable')}" list="nombres" autocapitalize="words"></label>
+      <div class="firma-wrap${b.firma ? ' ok' : ''}" id="firma-wrap"><div class="firma-lin"></div><span class="firma-ph">✍️ Firmá acá con el dedo</span><canvas id="firma-cv" aria-label="Firma del responsable a cargo"></canvas></div>
+      <div class="firma-acc"><span id="firma-est">${b.firma ? 'Firmado ✔' : 'Sin firmar'}</span><button class="btn suave" id="firma-borrar" type="button">Borrar firma</button></div>
+    </div>
     <div class="barra">
       <div class="resu" id="resu"></div>
       <button class="btn sig" id="siguiente" aria-label="Ir a la siguiente pendiente"><svg viewBox="0 0 24 24" class="ic" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></button>
@@ -1537,10 +1613,11 @@ function renderPM1(){
     </div>
     <p style="text-align:center;margin:10px 0 0"><button class="btn suave" id="limpiar">Empezar de cero</button></p>`;
 
-  ['fecha','tecnico','base','obs'].forEach(k => { const x = $('#f-' + k); x.oninput = () => {
+  ['fecha','tecnico','base','obs','responsable'].forEach(k => { const x = $('#f-' + k); x.oninput = () => {
     b[k] = x.value; guardarPronto();
-    if (k === 'tecnico') document.querySelectorAll('input[data-resp]').forEach(i => i.placeholder = x.value || 'Técnico a cargo');
+    if (k === 'tecnico'){ document.querySelectorAll('input[data-resp]').forEach(i => i.placeholder = x.value || 'Técnico a cargo'); $('#f-responsable').placeholder = x.value || 'Nombre del responsable'; }
   }; });
+  iniciarFirma(b);
   const lista = $('#lista');
   lista.addEventListener('toggle', e => {                       // recordar secciones plegadas
     const d = e.target; if (!d.matches || !d.matches('details.sec')) return;
@@ -1586,6 +1663,8 @@ function renderPM1(){
     if (e.target.closest('[data-usanada]')){ cambiarUsadas([...(b.usadas || [])], false); return; }
     const todo = e.target.closest('[data-todo]');
     if (todo){ marcarTodoOK([todo.dataset.todo]); return; }
+    const cab = e.target.closest('.eq.completo .eq-cab');
+    if (cab){ const card = cab.closest('.eq'); plegarEq(card, !card.classList.contains('plegada')); return; }
     const tsec = e.target.closest('[data-todosec]');
     if (tsec){ marcarTodoOK([...tsec.closest('details.sec').querySelectorAll('.eq')].map(x => x.dataset.u)); return; }
     const paso = e.target.closest('[data-paso]');
@@ -1704,6 +1783,7 @@ function marcarTodoOK(ids){
     }
   });
   guardar();
+  ids.forEach(id => abiertasEq.delete(id));
   ids.forEach(repintarCard);
   const cambiados = antes.filter(([id, m]) => JSON.stringify(m) !== JSON.stringify(b.marcas[id])).length;
   if (!cambiados){ toast(quedan.length ? `Falta cargar a mano: ${quedan.join(' · ')}` : 'Ya estaba todo OK.', !!quedan.length); return; }
@@ -1779,8 +1859,11 @@ function actualizarCard(card, m){
   card.classList.toggle('completo', n === tot);
   card.classList.toggle('parcial', n > 0 && n < tot);
   card.querySelector('.eq-cnt').textContent = `${n}/${tot}`;
-  if (n !== tot) card.classList.remove('oc');
-  else setTimeout(() => card.classList.contains('completo') && card.classList.add('oc'), 700);   // en "solo pendientes" se va sola
+  if (n !== tot){ card.classList.remove('oc'); card.classList.remove('plegada'); }
+  else {
+    setTimeout(() => card.classList.contains('completo') && card.classList.add('oc'), 700);   // en "solo pendientes" se va sola
+    if (!card.classList.contains('plegada')) setTimeout(() => { if (card.classList.contains('completo')) plegarEq(card, true); }, 600);  // completo: se achica
+  }
   actualizarSec(card);
 }
 function actualizarResumen(){
@@ -1794,12 +1877,63 @@ function faltaTxt(e){
 }
 
 // Arma el check list tal como está en pantalla (para guardarlo o para exportarlo sin guardar)
+/* ---- Firma en pantalla del responsable a cargo ---- */
+// Se dibuja con el dedo en un recuadro blanco; se guarda como imagen chica (PNG) dentro del borrador.
+function iniciarFirma(b){
+  const cv = $('#firma-cv'), wrap = $('#firma-wrap'); if (!cv) return;
+  const ctx = cv.getContext('2d');
+  let dib = false, ult = null, trazos = 0;
+  const ajustar = () => {
+    const r = wrap.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2);
+    if (!r.width) return;
+    cv.width = Math.round(r.width * dpr); cv.height = Math.round(r.height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = '#0B2A5B'; ctx.lineWidth = 2.6;
+    if (b.firma){ const im = new Image(); im.onload = () => {
+      const k = Math.min(r.width / im.width, r.height / im.height); const w = im.width * k, h = im.height * k;
+      ctx.drawImage(im, (r.width - w) / 2, (r.height - h) / 2, w, h); }; im.src = b.firma; }
+  };
+  ajustar();
+  new ResizeObserver(() => { if (!dib) ajustar(); }).observe(wrap);
+  const pos = e => { const r = cv.getBoundingClientRect(); return {x:e.clientX - r.left, y:e.clientY - r.top}; };
+  cv.onpointerdown = e => { e.preventDefault(); cv.setPointerCapture(e.pointerId); dib = true; ult = pos(e);
+    ctx.beginPath(); ctx.arc(ult.x, ult.y, 1.3, 0, Math.PI * 2); ctx.fillStyle = '#0B2A5B'; ctx.fill(); trazos++; };
+  cv.onpointermove = e => { if (!dib) return; e.preventDefault();
+    for (const ev of (e.getCoalescedEvents ? e.getCoalescedEvents() : [e])){
+      const q = pos(ev); ctx.beginPath(); ctx.moveTo(ult.x, ult.y); ctx.lineTo(q.x, q.y); ctx.stroke(); ult = q; } };
+  const fin = () => { if (!dib) return; dib = false;
+    b.firma = exportarFirma(cv); b.firmaEn = new Date().toISOString();
+    wrap.classList.add('ok'); $('#firma-est').textContent = 'Firmado ✔'; guardarPronto(); };
+  cv.onpointerup = fin; cv.onpointercancel = fin; cv.onpointerleave = e => { if (dib && e.pointerType === 'mouse') fin(); };
+  $('#firma-borrar').onclick = () => {
+    if (!b.firma) return;
+    b.firma = ''; b.firmaEn = ''; ctx.clearRect(0, 0, cv.width, cv.height);
+    wrap.classList.remove('ok'); $('#firma-est').textContent = 'Sin firmar'; guardarPronto();
+  };
+}
+// Recorta lo dibujado, lo pone sobre blanco y lo achica (máx. 600 px de ancho) para que pese poco.
+function exportarFirma(cv){
+  const ctx = cv.getContext('2d'), {width:W, height:H} = cv, d = ctx.getImageData(0, 0, W, H).data;
+  let x0 = W, y0 = H, x1 = -1, y1 = -1;
+  for (let y = 0; y < H; y += 2) for (let x = 0; x < W; x += 2) if (d[(y * W + x) * 4 + 3] > 20){
+    if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+  if (x1 < 0) return '';
+  const pad = 12; x0 = Math.max(0, x0 - pad); y0 = Math.max(0, y0 - pad); x1 = Math.min(W, x1 + pad); y1 = Math.min(H, y1 + pad);
+  const w = x1 - x0, h = y1 - y0, k = Math.min(1, 600 / w, 200 / h);
+  const o = document.createElement('canvas'); o.width = Math.max(1, Math.round(w * k)); o.height = Math.max(1, Math.round(h * k));
+  const oc = o.getContext('2d'); oc.fillStyle = '#fff'; oc.fillRect(0, 0, o.width, o.height);
+  oc.drawImage(cv, x0, y0, w, h, 0, 0, o.width, o.height);
+  return o.toDataURL('image/png');
+}
+const responsableDe = p => (p.responsable || p.tecnico || '').trim();
+
 function armarCheck(b){
   const resp = b.resp || {};
   const equipos = unidadesCheck(b).map(u => { const m = marcaDe(b, u.id); return {unidadId:u.id, tipo:u.tipo, serie:u.serie, puntos:[...puntosDe(u.tipo)],
                 hecho:(resp[tipoInfo(u.tipo).cat] || '').trim() || b.tecnico.trim(),
                 checks:[...m.checks], vals:m.vals.map(v => String(v ?? '').trim()), pideFoto:m.pideFoto, fotos:[...m.fotos], nota:(m.nota || '').trim()}; });
   return {id:'en-curso', fecha:b.fecha || hoyLocal(), tecnico:(b.tecnico || '').trim(), base:(b.base || '').trim(), obs:(b.obs || '').trim(),
+          responsable:((b.responsable || '').trim() || (b.tecnico || '').trim()), firma:b.firma || '', firmaEn:b.firmaEn || '',
           equipos, creado:new Date().toISOString()};
 }
 
@@ -1857,6 +1991,8 @@ function guardarPM1(){
       !confirm('No marcaste ninguna herramienta como usada en el pozo, así que el informe sale sin PM1 de herramientas.\n¿Guardar igual?')) return;
   const {equipos} = armarCheck(b);
   if (!equipos.some(e => prog(e).n)){ toast('Todavía no cargaste nada.', true); return; }
+  if (!b.firma){ toast('Falta la firma del responsable a cargo (abajo de todo).', true);
+    $('#firma-box').scrollIntoView({behavior:'smooth', block:'center'}); return; }
   const inc = equipos.filter(e => !completo(e));
   if (inc.length){
     const ls = inc.slice(0, 12).map(e => `  ${nombreEq(e)} (${prog(e).n ? faltaTxt(e) : 'sin revisar'})`);
@@ -1866,7 +2002,7 @@ function guardarPM1(){
   const p = {...armarCheck(b), id:uid()};
   S.pm1.push(p);
   S.ultimo.tecnico = p.tecnico; S.ultimo.base = p.base;
-  const nuevos = [p.tecnico, ...equipos.map(e => e.hecho)].filter(Boolean);
+  const nuevos = [p.tecnico, p.responsable, ...equipos.map(e => e.hecho)].filter(Boolean);
   S.ultimo.nombres = [...new Set([...nuevos, ...(S.ultimo.nombres || [])])].slice(0, 20);   // para autocompletar
   S.borrador = null;
   guardar();
@@ -1904,6 +2040,7 @@ function renderListo(el){
       <div><b>${fmtFecha(p.fecha)}</b>, ${esc(p.tecnico)}${p.base ? `, ${esc(p.base)}` : ''}</div>
       <ul>${p.equipos.map(e => `<li><span><b>${esc(e.tipo)}</b> ${esc(e.serie || '')}</span>
         <span class="${completo(e) ? 'comp' : 'inc'}">${completo(e) ? 'Completo' : faltaTxt(e)}</span></li>`).join('')}</ul>
+      ${p.firma ? `<div class="listo-firma"><img src="${p.firma}" alt="Firma"><div><b>${esc(responsableDe(p))}</b><small>Responsable a cargo</small></div></div>` : ''}
     </div>
     ${reposicionHTML(p)}
     ${comparacionHTML(p)}
@@ -1978,7 +2115,8 @@ function renderInicio(){
           <div class="ant-acc"><button class="btn wa mini" data-aenv="${p.id}">${ICO_WA}Mandar</button><button class="btn suave mini" data-aborr="${p.id}" aria-label="Borrar">✕</button></div></li>`; }).join('')}</ul>
         ${ants.length > 6 ? `<button class="btn suave ancho" id="i-todos">${verTodos ? 'Ver menos' : `Ver los ${ants.length}`}</button>` : ''}` : '<p class="sub">Todavía no hay check list guardados.</p>'}
     </div>
-    <label class="sw sw-sol"><input type="checkbox" id="i-sol" ${S.ultimo.sol ? 'checked' : ''}><span class="sw-b" aria-hidden="true"></span>Modo sol (alto contraste, para usar afuera)</label>`;
+    <label class="sw sw-sol"><input type="checkbox" id="i-sol" ${S.ultimo.sol ? 'checked' : ''}><span class="sw-b" aria-hidden="true"></span>Modo sol (alto contraste, para usar afuera)</label>
+    <label class="sw sw-sol"><input type="checkbox" id="i-grande" ${S.ultimo.grande !== false ? 'checked' : ''}><span class="sw-b" aria-hidden="true"></span>Letras y botones grandes</label>`;
   el.querySelectorAll('[data-repo]').forEach(x => x.onclick = () => pedirReposicion(armarCheck(S.borrador)));
   $('#i-seguir').onclick = () => { irA('pm1'); setTimeout(siguientePendiente, 60); };
   const ie = $('#i-exportar'); if (ie) ie.onclick = () => abrirExportar();
@@ -1993,6 +2131,7 @@ function renderInicio(){
   });
   const vt = $('#i-todos'); if (vt) vt.onclick = () => { verTodos = !verTodos; renderInicio(); };
   $('#i-sol').onchange = e => { S.ultimo.sol = e.target.checked; guardar(); document.documentElement.classList.toggle('sol', e.target.checked); };
+  $('#i-grande').onchange = e => { S.ultimo.grande = e.target.checked; guardar(); document.documentElement.classList.toggle('grande', e.target.checked); };
 }
 function irASeccion(cat){
   recienGuardado = null; secCerradas.delete(cat); irA('pm1');
@@ -2252,6 +2391,7 @@ function renderAjustes(){
     ${instalarHTML()}
     <label class="sw"><input type="checkbox" id="a-tema" ${document.documentElement.classList.contains('dark') ? 'checked' : ''} onchange="cambiarTema()"><span class="sw-b" aria-hidden="true"></span>Tema oscuro</label>
     <label class="sw sw-sol"><input type="checkbox" id="a-sol" ${S.ultimo.sol ? 'checked' : ''}><span class="sw-b" aria-hidden="true"></span>Modo sol (alto contraste, para usar afuera)</label>
+    <label class="sw sw-sol"><input type="checkbox" id="a-grande" ${S.ultimo.grande !== false ? 'checked' : ''}><span class="sw-b" aria-hidden="true"></span>Letras y botones grandes</label>
     <hr class="sep">
     <label class="intervalo">Revisar la unidad cada <input type="number" min="1" inputmode="numeric" id="p-int" value="${S.intervalo}"> días</label>
     <p class="sub">Con esto se avisa si las cajas, el winche, el camión, etc. llevan mucho sin revisarse. Las herramientas no vencen: el PM1 se hace cuando bajan al pozo.</p>
@@ -2276,6 +2416,7 @@ function renderAjustes(){
   const bi = $('#b-instalar');
   if (bi) bi.onclick = async () => { const e = pedidoInstalar; if (!e) return; e.prompt(); try{ await e.userChoice; }catch(_){} pedidoInstalar = null; renderAjustes(); };
   $('#a-sol').onchange = e => { S.ultimo.sol = e.target.checked; guardar(); document.documentElement.classList.toggle('sol', e.target.checked); };
+  $('#a-grande').onchange = e => { S.ultimo.grande = e.target.checked; guardar(); document.documentElement.classList.toggle('grande', e.target.checked); };
   const pi = $('#p-int');
   pi.onchange = () => { const v = parseInt(pi.value, 10); if (v >= 1){ S.intervalo = v; guardar(); render(); toast('Intervalo actualizado'); } else pi.value = S.intervalo; };
   $('#x-todo').onclick = () => {
@@ -2373,6 +2514,7 @@ function construirXLSX(pm1s){
       [['Técnico a cargo',6], [p.tecnico,0]],
       [['Base o lugar',6], [p.base,0]],
       [['Observaciones',6], [p.obs,0]],
+      [['Responsable a cargo',6], [responsableDe(p) + (p.firma ? ' (firmado, ver PDF)' : ' (sin firmar)'),0]],
       [],
       [['Sección',1], ['Hecho por',1], ['Completos',1], ['Faltantes',1]],
       ...secs.map(({c, eqs}) => [[c.nombre,0], [hechoPor(p, eqs[0]),0],
@@ -2694,11 +2836,22 @@ function construirPDF(p, fotos){
   fuente(10, false); color(NEGRO); doc.text(obsL, M, y + 5);
   y += obsL.length * 4.6 + 7;
 
-  espacio(30, false);
-  y += 18;
-  doc.setDrawColor(20); doc.setLineWidth(0.3); doc.line(M, y, M + 80, y); doc.line(M + W - 80, y, M + W, y);
-  fuente(9, false); color(NEGRO);
-  doc.text(pdfTxt('Técnico: ' + p.tecnico), M, y + 4.5); doc.text('Supervisor', M + W - 80, y + 4.5);
+  // Firma del responsable a cargo (una sola, a la derecha)
+  espacio(46, false);
+  const fx = M + W - 85;
+  y += 4;
+  fuente(8, true); color(GRIS); doc.text('RESPONSABLE A CARGO', fx, y);
+  if (p.firma){ try{
+    const pr = doc.getImageProperties(p.firma), k = Math.min(80 / pr.width, 24 / pr.height);
+    doc.addImage(p.firma, 'PNG', fx + (80 - pr.width * k) / 2, y + 2 + (24 - pr.height * k), pr.width * k, pr.height * k);
+  }catch(e){ console.error(e); } }
+  y += 28;
+  doc.setDrawColor(20); doc.setLineWidth(0.3); doc.line(fx, y, fx + 80, y);
+  fuente(9.5, true); color(NEGRO); doc.text(pdfTxt(responsableDe(p)), fx + 40, y + 4.5, {align:'center'});
+  if (p.firmaEn){ const fe = new Date(p.firmaEn);
+    fuente(7.5, false); color(GRIS);
+    doc.text(`Firmado en pantalla el ${pad(fe.getDate())}/${pad(fe.getMonth()+1)}/${fe.getFullYear()} ${pad(fe.getHours())}:${pad(fe.getMinutes())}`, fx + 40, y + 8.5, {align:'center'}); }
+  else if (!p.firma){ fuente(7.5, false); color(GRIS); doc.text('Sin firmar', fx + 40, y + 8.5, {align:'center'}); }
 
   const np = doc.getNumberOfPages(), d = new Date();
   const imp = `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
@@ -2743,6 +2896,7 @@ function archivoCSV(p, base){
     if (e.pideFoto) filas.push([fmtFecha(p.fecha), p.tecnico, catNombre(e.tipo), e.tipo, e.serie || '', 'Foto', (e.fotos || []).length ? `${e.fotos.length} foto(s), van en el PDF` : 'Sin foto', '', '', '', hechoPor(p, e), '']);
   });
   if (p.obs) filas.push([fmtFecha(p.fecha), p.tecnico, 'Observaciones generales', '', '', '', p.obs, '', '', '', '', '']);
+  filas.push([fmtFecha(p.fecha), p.tecnico, 'Responsable a cargo', '', '', '', responsableDe(p) + (p.firma ? ' (firmado, ver PDF)' : ' (sin firmar)'), '', '', '', '', '']);
   const texto = '\uFEFF' + filas.map(f => f.map(c).join(';')).join('\r\n');
   return {nombre:base.replace(/[^\w\-]+/g, '_') + '.csv', bytes:new TextEncoder().encode(texto), mime:'text/csv'};
 }
@@ -2793,7 +2947,7 @@ function cambiarTema(){
   aplicarTema(oscuro); })();
 
 /* ================== App instalable (PWA) ================== */
-const APP_VERSION = '25';
+const APP_VERSION = '27';
 let pedidoInstalar = null;
 const esApp = () => (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
 const esIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent);
@@ -2831,6 +2985,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#exp-h
 (() => { const h = document.querySelector('header.top'), set = () => document.documentElement.style.setProperty('--hdr', h.offsetHeight + 'px');
   set(); if (window.ResizeObserver) new ResizeObserver(set).observe(h); else window.addEventListener('resize', set); })();
 document.documentElement.classList.toggle('sol', !!S.ultimo.sol);
+document.documentElement.classList.toggle('grande', S.ultimo.grande !== false);   // V27: letras grandes de entrada
 irA('inicio');
 </script>
 </body>

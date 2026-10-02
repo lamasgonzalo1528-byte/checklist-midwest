@@ -49,3 +49,8 @@ IMPORTANTE
   Los check list, fotos y datos NUNCA salen del celular de cada uno.
 - No borres los datos del sitio en Chrome (Configuración > Sitios), porque ahí viven los check list.
   Exportá un respaldo seguido desde Ajustes.
+
+V27 (letras grandes y equipos que se achican)
+---------------------------------------------
+Para actualizar alcanza con subir de nuevo index.html y sw.js (reemplazan a los viejos).
+Si habías subido prueba.html, lo podés borrar del repositorio (ya no hace falta).
